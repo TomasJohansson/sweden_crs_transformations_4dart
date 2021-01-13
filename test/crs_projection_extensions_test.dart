@@ -105,4 +105,26 @@ void main() {
     }
   });    
 
+  test('getAsString', () {
+    Assert.AreEqual(
+      "WGS84",
+      CrsProjection.wgs84.getAsString()
+    );
+
+    Assert.AreEqual(
+      "SWEREF_99_TM",
+      CrsProjection.sweref_99_tm.getAsString()
+    );
+
+    Assert.AreEqual(
+      "SWEREF_99_14_15",
+      CrsProjection.sweref_99_14_15.getAsString()
+    );
+
+    Assert.AreEqual(
+      "RT90_0_0_GON_V",
+      CrsProjection.rt90_0_0_gon_v.getAsString()
+    );
+    
+  }); 
 }

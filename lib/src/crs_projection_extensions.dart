@@ -73,4 +73,15 @@ extension CrsProjectionExtensions on CrsProjection {
     int epsgNumber = getEpsgNumber();
     return _CrsProjectionConstant._epsgLowerValueForRT90 <= epsgNumber && epsgNumber <= _CrsProjectionConstant._epsgUpperValueForRT90;
   }  
+
+  /// <summary>
+  /// True if the coordinate reference system is a version of RT90.
+  /// </summary>
+  String getAsString() {
+    String enumTypenameAndInstanceNameSeparatedWithDot = this.toString(); // something like "CrsProjection.sweref_99_18_00"
+    int indexOfTheDot = enumTypenameAndInstanceNameSeparatedWithDot.indexOf('.');
+    String instanceName = enumTypenameAndInstanceNameSeparatedWithDot.substring(indexOfTheDot + 1);
+    // print("instanceName " + instanceName); // e.g. "sweref_99_18_00"
+    return instanceName.toUpperCase(); // e.g. "SWEREF_99_18_00"
+  }    
 }
