@@ -1,4 +1,5 @@
-﻿/*
+﻿// dart lib/src/mighty_little_geodesy/gauss_kreuger.dart
+/*
 * Copyright (c) Tomas Johansson , http://www.programmerare.com
 * The code in this library is licensed with MIT.
 * The library is based on the library 'MightyLittleGeodesy' (https://github.com/bjornsallarp/MightyLittleGeodesy/) 
@@ -74,6 +75,7 @@
   */
 import 'dart:math' as Math;
 import '../crs_projection.dart';
+import 'lon_lat.dart';
 
 class GaussKreuger
 {
@@ -213,7 +215,7 @@ class GaussKreuger
     }
     else
     {
-      _central_meridian = double.MinValue;
+      _central_meridian = double.minPositive;
     }
   }
 
@@ -222,13 +224,13 @@ class GaussKreuger
   {
     _axis = 6378137.0; // GRS 80.
     _flattening = 1.0 / 298.257222101; // GRS 80.
-    _central_meridian = double.MinValue;
+    _central_meridian = double.minPositive;
   }
   void _bessel_params()
   {
     _axis = 6377397.155; // Bessel 1841.
     _flattening = 1.0 / 299.1528128; // Bessel 1841.
-    _central_meridian = double.MinValue;
+    _central_meridian = double.minPositive;
     _scale = 1.0;
     _false_northing = 0.0;
     _false_easting = 1500000.0;
@@ -237,7 +239,7 @@ class GaussKreuger
   {
     _axis = 6378137.0; // GRS 80.
     _flattening = 1.0 / 298.257222101; // GRS 80.
-    _central_meridian = double.MinValue;
+    _central_meridian = double.minPositive;
     _scale = 1.0;
     _false_northing = 0.0;
     _false_easting = 150000.0;
@@ -246,7 +248,7 @@ class GaussKreuger
   // Conversion from geodetic coordinates to grid coordinates.
   LonLat geodetic_to_grid(double latitude, double longitude) // public double[] geodetic_to_grid(double latitude, double longitude)
   {
-    double[] x_y = new double[2];
+    List<double> x_y = [0.0, 0.0];
 
     // Prepare ellipsoid-based stuff.
     double e2 = _flattening * (2.0 - _flattening);
@@ -286,9 +288,9 @@ class GaussKreuger
                 beta3 * Math.cos(6.0 * xi_prim) * _math_sinh(6.0 * eta_prim) +
                 beta4 * Math.cos(8.0 * xi_prim) * _math_sinh(8.0 * eta_prim)) +
                 _false_easting;
-    x_y[0] = Math.Round(x * 1000.0) / 1000.0;
-    x_y[1] = Math.Round(y * 1000.0) / 1000.0;
-    var lonLat = new LonLat(x_y[1], x_y[0]);
+    x_y[0] = ((x * 1000.0) / 1000.0).roundToDouble();
+    x_y[1] = ((y * 1000.0) / 1000.0).roundToDouble();
+    var lonLat = LonLat(x_y[1], x_y[0]);
     return lonLat; //return x_y;
   }
 
@@ -296,8 +298,8 @@ class GaussKreuger
 
   LonLat grid_to_geodetic(double yLatitude, double xLongitude) // public double[] grid_to_geodetic(double yLatitude, double xLongitude)
   {
-    double[] lat_lon = new double[2];
-    if (_central_meridian == double.MinValue)
+    List<double> lat_lon = [0.0, 0.0];
+    if (_central_meridian == double.minPositive)
     {
       return new LonLat(lat_lon[0], lat_lon[1]);
     }
@@ -340,7 +342,7 @@ class GaussKreuger
                       Dstar * Math.pow(Math.sin(phi_star), 6));
     lat_lon[0] = lat_radian * 180.0 / Math.pi;
     lat_lon[1] = lon_radian * 180.0 / Math.pi;
-    var lonLat = new LonLat(lat_lon[1], lat_lon[0]);
+    var lonLat = LonLat(lat_lon[1], lat_lon[0]);
     return lonLat; // return lat_lon;
   }
 
