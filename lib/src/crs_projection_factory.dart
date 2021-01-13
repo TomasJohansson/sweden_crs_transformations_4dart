@@ -12,7 +12,11 @@
 /// (since such custom methods can not be located within the CrsProjection enum type itself)
 /// </summary>
 /// See also <see cref="CrsProjection"/>
-public static class CrsProjectionFactory {
+
+import 'crs_projection.dart';
+import 'crs_projection_extensions.dart';
+
+class CrsProjectionFactory {
 
   /// <summary>
   /// Factory method creating an enum 'CrsProjection' by its number (EPSG) value.
@@ -24,20 +28,22 @@ public static class CrsProjectionFactory {
   /// https://epsg.io
   /// </param>
   /// See also <see cref="CrsProjection"/>        
-  public static CrsProjection GetCrsProjectionByEpsgNumber(int epsg) {
-    var values = GetAllCrsProjections();
-    foreach(CrsProjection value in values) {
-      if(value.GetEpsgNumber() == epsg) {
-        return value;
+  static CrsProjection getCrsProjectionByEpsgNumber(int epsg) {
+    var values = getAllCrsProjections();
+    for(CrsProjection crsProjection in values) {
+      if(crsProjection.getEpsgNumber() == epsg) {
+        return crsProjection;
       }
     }
-    throw new ArgumentException("Could not find CrsProjection for EPSG " + epsg);
+    throw ArgumentError("Could not find CrsProjection for EPSG " + epsg.toString()); // https://api.dart.dev/stable/2.10.4/dart-core/ArgumentError-class.html
   }
 
   /// <summary>
   /// Convenience method for retrieving all the projections in a List.
   /// </summary>
-  public static IList<CrsProjection> GetAllCrsProjections() {
-    return ((CrsProjection[])Enum.GetValues(typeof(CrsProjection))).ToList();
+  static List<CrsProjection> getAllCrsProjections() {
+    // return ((CrsProjection[])Enum.GetValues(typeof(CrsProjection))).ToList(); // C#.NET
+    // this library is ported from C#.NET which implemented this method as the above line but with Dart it is as simple as the line below
+    return CrsProjection.values;
   }
 }
