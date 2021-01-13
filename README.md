@@ -5,7 +5,7 @@
 
 That C#.NET library ('sweden_crs_transformations_4net') is based on [C# library MightyLittleGeodesy](https://github.com/bjornsallarp/MightyLittleGeodesy/) which in turn is based on a [javascript library by Arnold Andreasson](http://latlong.mellifica.se/).
 
-The main part of 'MightyLittleGeodesy' which has been kept (to the C# library 'sweden_crs_transformations_4net') is the mathematical calculations in the class 'GaussKreuger.cs'.
+The main part of 'MightyLittleGeodesy' which has been kept (to the C# library 'sweden_crs_transformations_4net') is the mathematical calculations in the class 'GaussKreuger.cs'.  
 Regarding the port to this 'sweden_crs_transformations_4dart' then of course there had to be more modifications since Dart has differences in syntax compared with C#, although 
 the mathematical logic has still been kept from the original 'MightyLittleGeodesy' class 'GaussKreuger.cs'.
 
@@ -13,8 +13,6 @@ the mathematical logic has still been kept from the original 'MightyLittleGeodes
 No, not yet, but maybe soon.
 
 # Code example
-Please note that the API is very different from the originally forked library.  
-(the only significant part that remains from the forked library is the *internal implementation* using the GaussKreuger class)
 ```dart
 import 'package:sweden_crs_transformations_4dart/sweden_crs_transformations_4dart.dart';
 
@@ -67,13 +65,13 @@ for(var crsProjection in allProjections) {
 
 # License
 
-MIT.
+MIT.  
 'sweden_crs_transformations_4dart' is ported from the C# library 'sweden_crs_transformations_4net'
 which is also licensed with MIT since it started as a fork of the C# library 'MightyLittleGeodesy' which is licensed with the MIT license.
 
 # License for the original C# repository [MightyLittleGeodesy](https://github.com/bjornsallarp/MightyLittleGeodesy/)
 
-The text below has been copied from the above webpage:
+The text below has been copied from the above linked webpage:
 > The calculations in this library is based on the excellent javascript library by Arnold Andreasson which is published under the Creative Commons license. However, as agreed with mr Andreasson, MightyLittleGeodesy is now licensed under the MIT license.
 
 The text below has been copied from [one of the source files for MightyLittleGeodesy](https://github.com/bjornsallarp/MightyLittleGeodesy/blob/83491fc6e7454f5d90d792610b317eca7a332334/MightyLittleGeodesy/Classes/GaussKreuger.cs).
