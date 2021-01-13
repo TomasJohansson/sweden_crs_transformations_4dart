@@ -75,7 +75,7 @@
 import 'dart:math' as Math;
 import '../crs_projection.dart';
 
-internal class GaussKreuger
+class GaussKreuger
 {
   double axis; // Semi-major axis of the ellipsoid.
   double flattening; // Flattening of the ellipsoid.
@@ -95,7 +95,7 @@ internal class GaussKreuger
     // RT90 parameters, GRS 80 ellipsoid.
     if (projection == CrsProjection.rt90_7_5_gon_v)
     {
-      grs80_params();
+      _grs80_params();
       central_meridian = 11.0 + 18.375 / 60.0;
       scale = 1.000006000000;
       false_northing = -667.282;
@@ -103,7 +103,7 @@ internal class GaussKreuger
     }
     else if (projection == CrsProjection.rt90_5_0_gon_v)
     {
-      grs80_params();
+      _grs80_params();
       central_meridian = 13.0 + 33.376 / 60.0;
       scale = 1.000005800000;
       false_northing = -667.130;
@@ -111,7 +111,7 @@ internal class GaussKreuger
     }
     else if (projection == CrsProjection.rt90_2_5_gon_v)
     {
-      grs80_params();
+      _grs80_params();
       central_meridian = 15.0 + 48.0 / 60.0 + 22.624306 / 3600.0;
       scale = 1.00000561024;
       false_northing = -667.711;
@@ -119,7 +119,7 @@ internal class GaussKreuger
     }
     else if (projection == CrsProjection.rt90_0_0_gon_v)
     {
-      grs80_params();
+      _grs80_params();
       central_meridian = 18.0 + 3.378 / 60.0;
       scale = 1.000005400000;
       false_northing = -668.844;
@@ -127,7 +127,7 @@ internal class GaussKreuger
     }
     else if (projection == CrsProjection.rt90_2_5_gon_o)
     {
-      grs80_params();
+      _grs80_params();
       central_meridian = 20.0 + 18.379 / 60.0;
       scale = 1.000005200000;
       false_northing = -670.706;
@@ -135,7 +135,7 @@ internal class GaussKreuger
     }
     else if (projection == CrsProjection.rt90_5_0_gon_o)
     {
-      grs80_params();
+      _grs80_params();
       central_meridian = 22.0 + 33.380 / 60.0;
       scale = 1.000004900000;
       false_northing = -672.557;
@@ -145,7 +145,7 @@ internal class GaussKreuger
     // SWEREF99TM and SWEREF99ddmm  parameters.
     else if (projection == CrsProjection.sweref_99_tm)
     {
-      sweref99_params();
+      _sweref99_params();
       central_meridian = 15.00;
       scale = 0.9996;
       false_northing = 0.0;
@@ -153,62 +153,62 @@ internal class GaussKreuger
     }
     else if (projection == CrsProjection.sweref_99_12_00)
     {
-      sweref99_params();
+      _sweref99_params();
       central_meridian = 12.00;
     }
     else if (projection == CrsProjection.sweref_99_13_30)
     {
-      sweref99_params();
+      _sweref99_params();
       central_meridian = 13.50;
     }
     else if (projection == CrsProjection.sweref_99_15_00)
     {
-      sweref99_params();
+      _sweref99_params();
       central_meridian = 15.00;
     }
     else if (projection == CrsProjection.sweref_99_16_30)
     {
-      sweref99_params();
+      _sweref99_params();
       central_meridian = 16.50;
     }
     else if (projection == CrsProjection.sweref_99_18_00)
     {
-      sweref99_params();
+      _sweref99_params();
       central_meridian = 18.00;
     }
     else if (projection == CrsProjection.sweref_99_14_15)
     {
-      sweref99_params();
+      _sweref99_params();
       central_meridian = 14.25;
     }
     else if (projection == CrsProjection.sweref_99_15_45)
     {
-      sweref99_params();
+      _sweref99_params();
       central_meridian = 15.75;
     }
     else if (projection == CrsProjection.sweref_99_17_15)
     {
-      sweref99_params();
+      _sweref99_params();
       central_meridian = 17.25;
     }
     else if (projection == CrsProjection.sweref_99_18_45)
     {
-      sweref99_params();
+      _sweref99_params();
       central_meridian = 18.75;
     }
     else if (projection == CrsProjection.sweref_99_20_15)
     {
-      sweref99_params();
+      _sweref99_params();
       central_meridian = 20.25;
     }
     else if (projection == CrsProjection.sweref_99_21_45)
     {
-      sweref99_params();
+      _sweref99_params();
       central_meridian = 21.75;
     }
     else if (projection == CrsProjection.sweref_99_23_15)
     {
-      sweref99_params();
+      _sweref99_params();
       central_meridian = 23.25;
     }
     else
@@ -218,13 +218,13 @@ internal class GaussKreuger
   }
 
   // Sets of default parameters.
-  private void grs80_params()
+  void _grs80_params()
   {
     axis = 6378137.0; // GRS 80.
     flattening = 1.0 / 298.257222101; // GRS 80.
     central_meridian = double.MinValue;
   }
-  private void bessel_params()
+  void _bessel_params()
   {
     axis = 6377397.155; // Bessel 1841.
     flattening = 1.0 / 299.1528128; // Bessel 1841.
@@ -233,7 +233,7 @@ internal class GaussKreuger
     false_northing = 0.0;
     false_easting = 1500000.0;
   }
-  private void sweref99_params()
+  void _sweref99_params()
   {
     axis = 6378137.0; // GRS 80.
     flattening = 1.0 / 298.257222101; // GRS 80.
@@ -244,7 +244,7 @@ internal class GaussKreuger
   }
 
   // Conversion from geodetic coordinates to grid coordinates.
-  public LonLat geodetic_to_grid(double latitude, double longitude) // public double[] geodetic_to_grid(double latitude, double longitude)
+  LonLat geodetic_to_grid(double latitude, double longitude) // public double[] geodetic_to_grid(double latitude, double longitude)
   {
     double[] x_y = new double[2];
 
@@ -273,18 +273,18 @@ internal class GaussKreuger
                 D * Math.pow(Math.sin(phi), 6));
     double delta_lambda = lambda - lambda_zero;
     double xi_prim = Math.atan(Math.tan(phi_star) / Math.cos(delta_lambda));
-    double eta_prim = math_atanh(Math.cos(phi_star) * Math.sin(delta_lambda));
+    double eta_prim = _math_atanh(Math.cos(phi_star) * Math.sin(delta_lambda));
     double x = scale * a_roof * (xi_prim +
-                beta1 * Math.sin(2.0 * xi_prim) * math_cosh(2.0 * eta_prim) +
-                beta2 * Math.sin(4.0 * xi_prim) * math_cosh(4.0 * eta_prim) +
-                beta3 * Math.sin(6.0 * xi_prim) * math_cosh(6.0 * eta_prim) +
-                beta4 * Math.sin(8.0 * xi_prim) * math_cosh(8.0 * eta_prim)) +
+                beta1 * Math.sin(2.0 * xi_prim) * _math_cosh(2.0 * eta_prim) +
+                beta2 * Math.sin(4.0 * xi_prim) * _math_cosh(4.0 * eta_prim) +
+                beta3 * Math.sin(6.0 * xi_prim) * _math_cosh(6.0 * eta_prim) +
+                beta4 * Math.sin(8.0 * xi_prim) * _math_cosh(8.0 * eta_prim)) +
                 false_northing;
     double y = scale * a_roof * (eta_prim +
-                beta1 * Math.cos(2.0 * xi_prim) * math_sinh(2.0 * eta_prim) +
-                beta2 * Math.cos(4.0 * xi_prim) * math_sinh(4.0 * eta_prim) +
-                beta3 * Math.cos(6.0 * xi_prim) * math_sinh(6.0 * eta_prim) +
-                beta4 * Math.cos(8.0 * xi_prim) * math_sinh(8.0 * eta_prim)) +
+                beta1 * Math.cos(2.0 * xi_prim) * _math_sinh(2.0 * eta_prim) +
+                beta2 * Math.cos(4.0 * xi_prim) * _math_sinh(4.0 * eta_prim) +
+                beta3 * Math.cos(6.0 * xi_prim) * _math_sinh(6.0 * eta_prim) +
+                beta4 * Math.cos(8.0 * xi_prim) * _math_sinh(8.0 * eta_prim)) +
                 false_easting;
     x_y[0] = Math.Round(x * 1000.0) / 1000.0;
     x_y[1] = Math.Round(y * 1000.0) / 1000.0;
@@ -294,7 +294,7 @@ internal class GaussKreuger
 
   // Conversion from grid coordinates to geodetic coordinates.
 
-  public LonLat grid_to_geodetic(double yLatitude, double xLongitude) // public double[] grid_to_geodetic(double yLatitude, double xLongitude)
+  LonLat grid_to_geodetic(double yLatitude, double xLongitude) // public double[] grid_to_geodetic(double yLatitude, double xLongitude)
   {
     double[] lat_lon = new double[2];
     if (central_meridian == double.MinValue)
@@ -321,17 +321,17 @@ internal class GaussKreuger
     double xi = (yLatitude - false_northing) / (scale * a_roof);
     double eta = (xLongitude - false_easting) / (scale * a_roof);
     double xi_prim = xi -
-                    delta1 * Math.sin(2.0 * xi) * math_cosh(2.0 * eta) -
-                    delta2 * Math.sin(4.0 * xi) * math_cosh(4.0 * eta) -
-                    delta3 * Math.sin(6.0 * xi) * math_cosh(6.0 * eta) -
-                    delta4 * Math.sin(8.0 * xi) * math_cosh(8.0 * eta);
+                    delta1 * Math.sin(2.0 * xi) * _math_cosh(2.0 * eta) -
+                    delta2 * Math.sin(4.0 * xi) * _math_cosh(4.0 * eta) -
+                    delta3 * Math.sin(6.0 * xi) * _math_cosh(6.0 * eta) -
+                    delta4 * Math.sin(8.0 * xi) * _math_cosh(8.0 * eta);
     double eta_prim = eta -
-                    delta1 * Math.cos(2.0 * xi) * math_sinh(2.0 * eta) -
-                    delta2 * Math.cos(4.0 * xi) * math_sinh(4.0 * eta) -
-                    delta3 * Math.cos(6.0 * xi) * math_sinh(6.0 * eta) -
-                    delta4 * Math.cos(8.0 * xi) * math_sinh(8.0 * eta);
-    double phi_star = Math.asin(Math.sin(xi_prim) / math_cosh(eta_prim));
-    double delta_lambda = Math.atan(math_sinh(eta_prim) / Math.cos(xi_prim));
+                    delta1 * Math.cos(2.0 * xi) * _math_sinh(2.0 * eta) -
+                    delta2 * Math.cos(4.0 * xi) * _math_sinh(4.0 * eta) -
+                    delta3 * Math.cos(6.0 * xi) * _math_sinh(6.0 * eta) -
+                    delta4 * Math.cos(8.0 * xi) * _math_sinh(8.0 * eta);
+    double phi_star = Math.asin(Math.sin(xi_prim) / _math_cosh(eta_prim));
+    double delta_lambda = Math.atan(_math_sinh(eta_prim) / Math.cos(xi_prim));
     double lon_radian = lambda_zero + delta_lambda;
     double lat_radian = phi_star + Math.sin(phi_star) * Math.cos(phi_star) *
                     (Astar +
@@ -345,13 +345,13 @@ internal class GaussKreuger
   }
 
 
-  private double math_sinh(double value) {
+  double _math_sinh(double value) {
     return 0.5 * (Math.exp(value) - Math.exp(-value));
   }
-  private double math_cosh(double value) {
+  double _math_cosh(double value) {
     return 0.5 * (Math.exp(value) + Math.exp(-value));
   }
-  private double math_atanh(double value) {
+  double _math_atanh(double value) {
     return 0.5 * Math.log((1.0 + value) / (1.0 - value));
   }
 
