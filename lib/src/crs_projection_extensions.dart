@@ -11,18 +11,26 @@
 /// Extension methods for the enum CrsProjection.
 /// See also <see cref="CrsProjection"/>
 /// </summary>
-public static class CrsProjectionExtensions {
 
-  private const int epsgForSweref99tm = 3006;
+import './crs_projection.dart';
 
-  //private const int epsgLowerValueForSwerefLocal = 3007; // the NATIONAL sweref99TM has value 3006 as in the above constant
-  //private const int epsgUpperValueForSwerefLocal = 3018;
-  private const int epsgLowerValueForSweref = epsgForSweref99tm;
-  private const int epsgUpperValueForSweref = 3018;
+class _CrsProjectionConstant {
+  static const int _epsgForWgs84 = 4326;
+  static const int _epsgForSweref99tm = 3006;
 
-  private const int epsgLowerValueForRT90 = 3019;
-  private const int epsgUpperValueForRT90 = 3024;
+  // //private const int epsgLowerValueForSwerefLocal = 3007; // the NATIONAL sweref99TM has value 3006 as in the above constant
+  // //private const int epsgUpperValueForSwerefLocal = 3018;
+  static const int _epsgLowerValueForSweref = _epsgForSweref99tm;
+  static const int _epsgUpperValueForSweref = 3018;
 
+  static const int _epsgLowerValueForRT90 = 3019;
+  static const int _epsgUpperValueForRT90 = 3024;
+
+  // the swedish projections start at index 1 (in the enum _CrsProjection) with EPSG number 3006 (i.e. the difference is 3006-1)
+  static const int _differenceBetweenEnumIndexAndEspgNumber = 3005;
+}
+
+extension CrsProjectionExtensions on CrsProjection {
   /// <summary>
   /// The EPSG number for the enum instance representing a coordinate reference system.
   /// The implementation is trivial but it is a convenience method that provides semantic 
@@ -33,31 +41,36 @@ public static class CrsProjectionExtensions {
   /// An EPSG number.
   /// https://en.wikipedia.org/wiki/EPSG_Geodetic_Parameter_Dataset
   /// </returns>
-  public static int GetEpsgNumber(this CrsProjection crsProjection) { 
+  int getEpsgNumber() {
     // the EPSG numbers have been used as the values in this enum
-    return (int)crsProjection;
+    if(index == 0) { // "index" here means "this.index" where "this"=an instance of CrsProjection
+      return _CrsProjectionConstant._epsgForWgs84;
+    }
+    else {
+      return index + _CrsProjectionConstant._differenceBetweenEnumIndexAndEspgNumber;
+    }
   }
 
   /// <summary>
   /// True if the coordinate reference system is WGS84.
   /// </summary>
-  public static bool IsWgs84(this CrsProjection crsProjection) {
-    return crsProjection == CrsProjection.wgs84;
+  bool isWgs84() { // this CrsProjection crsProjection
+    return this == CrsProjection.wgs84;
   }
-
+  
   /// <summary>
   /// True if the coordinate reference system is a version of SWEREF99.
   /// </summary>
-  public static bool IsSweref(this CrsProjection crsProjection) {
-    int epsgNumber = crsProjection.GetEpsgNumber();
-    return epsgLowerValueForSweref <= epsgNumber && epsgNumber <= epsgUpperValueForSweref;
+  bool isSweref() {
+    int epsgNumber = getEpsgNumber();
+    return _CrsProjectionConstant._epsgLowerValueForSweref <= epsgNumber && epsgNumber <= _CrsProjectionConstant._epsgUpperValueForSweref;
   }
 
   /// <summary>
   /// True if the coordinate reference system is a version of RT90.
   /// </summary>
-  public static bool IsRT90(this CrsProjection crsProjection) {
-    int epsgNumber = crsProjection.GetEpsgNumber();
-    return epsgLowerValueForRT90 <= epsgNumber && epsgNumber <= epsgUpperValueForRT90;
-  }
+  bool isRT90() {
+    int epsgNumber = getEpsgNumber();
+    return _CrsProjectionConstant._epsgLowerValueForRT90 <= epsgNumber && epsgNumber <= _CrsProjectionConstant._epsgUpperValueForRT90;
+  }  
 }

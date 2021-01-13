@@ -1,82 +1,108 @@
-﻿[TestFixture]
-public class CrsProjectionExtensionsTest {
+﻿import 'package:test/test.dart';
+import 'package:sweden_crs_transformations_4dart/sweden_crs_transformations_4dart.dart';
 
-  private HashSet<CrsProjection> _wgs84Projections;
-  private HashSet<CrsProjection> _sweref99Projections;
-  private HashSet<CrsProjection> _rt90Projections;
+import './dot_net_helpers.dart';
 
-  [SetUp]
-  public void SetUp() {
-    _wgs84Projections = new HashSet<CrsProjection>{ wgs84 };
-    _sweref99Projections = new HashSet<CrsProjection>{ 
-      sweref_99_12_00, sweref_99_13_30, sweref_99_14_15,
-      sweref_99_15_00, sweref_99_15_45, sweref_99_16_30,
-      sweref_99_17_15, sweref_99_18_00, sweref_99_18_45,
-      sweref_99_20_15, sweref_99_21_45, sweref_99_23_15, sweref_99_tm
+// dart test/crs_projection_extensions_test.dart
+
+void main() {
+  const int epsgNumberForWgs84 = 4326;
+  const int epsgNumberForSweref99tm = 3006; // https://epsg.org/crs_3006/SWEREF99-TM.html
+  const epsgNumberForRT90_5_0_gon_o = 3024;
+  const int numberOfSweref99projections = 13; // with EPSG numbers 3006-3018
+  const int numberOfRT90projections = 6; // with EPSG numbers 3019-3024
+  const int numberOfWgs84Projections = 1; // just to provide semantic instead of using a magic number 1 below
+  const int totalNumberOfProjections = numberOfSweref99projections + numberOfRT90projections + numberOfWgs84Projections;
+
+  Set<CrsProjection> _wgs84Projections;
+  Set<CrsProjection> _sweref99Projections;
+  Set<CrsProjection> _rt90Projections;
+
+  setUp(() {
+    _wgs84Projections = { CrsProjection.wgs84 };
+    
+     _sweref99Projections = {
+       CrsProjection.sweref_99_12_00, CrsProjection.sweref_99_13_30, CrsProjection.sweref_99_14_15,
+       CrsProjection.sweref_99_15_00, CrsProjection.sweref_99_15_45, CrsProjection.sweref_99_16_30,
+       CrsProjection.sweref_99_17_15, CrsProjection.sweref_99_18_00, CrsProjection.sweref_99_18_45,
+       CrsProjection.sweref_99_20_15, CrsProjection.sweref_99_21_45, CrsProjection.sweref_99_23_15,
+       CrsProjection.sweref_99_tm
     };
-    _rt90Projections = new HashSet<CrsProjection>{ 
-      rt90_0_0_gon_v, rt90_2_5_gon_o, rt90_2_5_gon_v,
-      rt90_5_0_gon_o, rt90_5_0_gon_v, rt90_7_5_gon_v
+    
+    _rt90Projections = {
+      CrsProjection.rt90_0_0_gon_v, CrsProjection.rt90_2_5_gon_o, CrsProjection.rt90_2_5_gon_v,
+      CrsProjection.rt90_5_0_gon_o, CrsProjection.rt90_5_0_gon_v, CrsProjection.rt90_7_5_gon_v
     };
-  }
+  });
 
-  [Test]
-  public void GetEpsgNumber() {
+  test('getEpsgNumber', () {
       Assert.AreEqual(
-        epsgNumberForSweref99tm, // constant defined in CrsProjectionFactoryTest
-        CrsProjection.sweref_99_tm.GetEpsgNumber()
+        epsgNumberForWgs84,
+        CrsProjection.wgs84.getEpsgNumber()
       );
 
       Assert.AreEqual(
-        epsgNumberForWgs84, // constant defined in CrsProjectionFactoryTest
-        CrsProjection.wgs84.GetEpsgNumber()
+        epsgNumberForSweref99tm,
+        CrsProjection.sweref_99_tm.getEpsgNumber()
       );
-  }
 
+      Assert.AreEqual(
+        epsgNumberForRT90_5_0_gon_o,
+        CrsProjection.rt90_5_0_gon_o.getEpsgNumber()
+      );
+  });
 
-  [Test]
-  public void isWgs84() {
-    Assert.AreEqual(numberOfWgs84Projections, _wgs84Projections.Count);
+  test('isWgs84', () {
+    Assert.IsTrue(CrsProjection.wgs84.isWgs84());
+    Assert.IsFalse(CrsProjection.sweref_99_tm.isWgs84());
+    Assert.IsFalse(CrsProjection.rt90_0_0_gon_v.isWgs84());
 
-    foreach(var item in _wgs84Projections) {
-      Assert.IsTrue(item.IsWgs84());
-    }
-    foreach(var item in _sweref99Projections) {
-      Assert.IsFalse(item.IsWgs84());
-    }
-    foreach(var item in _rt90Projections) {
-      Assert.IsFalse(item.IsWgs84());
-    }
-  }
+    Assert.AreEqual(numberOfWgs84Projections, _wgs84Projections.length);
 
-  [Test]
-  public void isSweref() {
-    Assert.AreEqual(numberOfSweref99projections, _sweref99Projections.Count);
+    for(var crsProjection in _wgs84Projections) {
+      Assert.IsTrue(crsProjection.isWgs84());
+    }
+    for(var crsProjection in _sweref99Projections) {
+      Assert.IsFalse(crsProjection.isWgs84());
+    }
+    for(var crsProjection in _rt90Projections) {
+      Assert.IsFalse(crsProjection.isWgs84());
+    }
+  });
+  test('isSweref', () {
+    Assert.IsFalse(CrsProjection.wgs84.isSweref());
+    Assert.IsTrue(CrsProjection.sweref_99_tm.isSweref());
+    Assert.IsFalse(CrsProjection.rt90_0_0_gon_v.isSweref());    
 
-    foreach(var item in _wgs84Projections) {
-      Assert.IsFalse(item.IsSweref());
-    }
-    foreach(var item in _sweref99Projections) {
-      Assert.IsTrue(item.IsSweref());
-    }
-    foreach(var item in _rt90Projections) {
-      Assert.IsFalse(item.IsSweref());
-    }
-  }
+    Assert.AreEqual(numberOfSweref99projections, _sweref99Projections.length);
 
-  [Test]
-  public void isRT90() {
-    Assert.AreEqual(numberOfRT90projections, _rt90Projections.Count);
+    for(var crsProjection in _wgs84Projections) {
+      Assert.IsFalse(crsProjection.isSweref());
+    }
+    for(var crsProjection in _sweref99Projections) {
+      Assert.IsTrue(crsProjection.isSweref());
+    }
+    for(var crsProjection in _rt90Projections) {
+      Assert.IsFalse(crsProjection.isSweref());
+    }    
+  });
 
-    foreach(var item in _wgs84Projections) {
-      Assert.IsFalse(item.IsRT90());
+  test('isRT90', () {
+    Assert.IsFalse(CrsProjection.wgs84.isRT90());
+    Assert.IsFalse(CrsProjection.sweref_99_tm.isRT90());
+    Assert.IsTrue(CrsProjection.rt90_0_0_gon_v.isRT90());
+
+    Assert.AreEqual(numberOfRT90projections, _rt90Projections.length);
+
+    for(var crsProjection in _wgs84Projections) {
+      Assert.IsFalse(crsProjection.isRT90());
     }
-    foreach(var item in _sweref99Projections) {
-      Assert.IsFalse(item.IsRT90());
+    for(var crsProjection in _sweref99Projections) {
+      Assert.IsFalse(crsProjection.isRT90());
     }
-    foreach(var item in _rt90Projections) {
-      Assert.IsTrue(item.IsRT90());
+    for(var crsProjection in _rt90Projections) {
+      Assert.IsTrue(crsProjection.isRT90());
     }
-  }
+  });    
 
 }
