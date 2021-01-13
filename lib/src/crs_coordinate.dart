@@ -14,10 +14,9 @@
 /// 
 import './crs_projection.dart';
 import './crs_projection_factory.dart';
-import './crs_projection_extensions.dart';
 import './transformation/transformer.dart';
 
-class CrsCoordinate { // : IEquatable<CrsCoordinate> {
+class CrsCoordinate {
 
   /// <summary>
   /// The coordinate reference system that defines the location together with the other two properties (LongitudeX and LatitudeY).
@@ -90,38 +89,29 @@ class CrsCoordinate { // : IEquatable<CrsCoordinate> {
     return CrsCoordinate._privateConstructor(crsProjection, xLongitude, yLatitude);
   }
 
-  // ----------------------------------------------------------------------------------------------------------------------
-  // These five methods below was generated with Visual Studio 2019
-  /*
-  public override bool Equals(object obj) {
-    return Equals(obj as CrsCoordinate);
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true; // Checks whether two references are to the same object.
+    if(other is CrsCoordinate) {
+      return other != null &&
+        this.crsProjection == other.crsProjection &&
+        this.LongitudeX == other.LongitudeX &&
+        this.LatitudeY == other.LatitudeY;
+    }
+    return true;
   }
+  // Regarding the missing (i.e. not implemented or overridden here) method "!=" it is "just syntactic sugar.
+  //  For example, the expression e1 != e2 is syntactic sugar for !(e1 == e2).""
+  // quoted from https://dart.dev/guides/language/language-tour#methods
 
-  public bool Equals(CrsCoordinate other) {
-    return other != null &&
-      CrsProjection == other.CrsProjection &&
-      LongitudeX == other.LongitudeX &&
-      LatitudeY == other.LatitudeY;
-  }
+  @override
+  int get hashCode {
+    var result = LongitudeX.hashCode;
+    result = 31 * result + LatitudeY.hashCode;
+    result = 31 * result + crsProjection.hashCode;
+    return result;
+  }  
 
-  public override int GetHashCode() {
-    int hashCode = 1147467376;
-    hashCode = hashCode * -1521134295 + CrsProjection.GetHashCode();
-    hashCode = hashCode * -1521134295 + LongitudeX.GetHashCode();
-    hashCode = hashCode * -1521134295 + LatitudeY.GetHashCode();
-    return hashCode;
-  }
-
-  public static bool operator ==(CrsCoordinate left, CrsCoordinate right) {
-    return EqualityComparer<CrsCoordinate>.Default.Equals(left, right);
-  }
-
-  public static bool operator !=(CrsCoordinate left, CrsCoordinate right) {
-    return !(left == right);
-  }
-*/
-  // These five methods above was generated with Visual Studio 2019
-  // ----------------------------------------------------------------------------------------------------------------------
 
   /// <summary>
   /// Two examples of the string that can be returned:

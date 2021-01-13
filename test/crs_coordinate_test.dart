@@ -95,17 +95,15 @@ void main() {
     Assert.AreEqual(y, crsCoordinate.LatitudeY);
   });
 
-/*
-  [Test]
-  public void EqualityTest() {
+  test('equalityTest', () {
     CrsCoordinate coordinateInstance_1 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, stockholmCentralStation_WGS84_longitude, stockholmCentralStation_WGS84_latitude);
     CrsCoordinate coordinateInstance_2 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, stockholmCentralStation_WGS84_longitude, stockholmCentralStation_WGS84_latitude);
+    Assert.AreEqual(coordinateInstance_1.hashCode, coordinateInstance_2.hashCode);
     Assert.AreEqual(coordinateInstance_1, coordinateInstance_2);
-    Assert.AreEqual(coordinateInstance_1.GetHashCode(), coordinateInstance_2.GetHashCode());
     Assert.IsTrue(coordinateInstance_1 == coordinateInstance_2);
     Assert.IsTrue(coordinateInstance_2 == coordinateInstance_1);
-    Assert.IsTrue(coordinateInstance_1.Equals(coordinateInstance_2));
-    Assert.IsTrue(coordinateInstance_2.Equals(coordinateInstance_1));
+    Assert.IsFalse(coordinateInstance_1 != coordinateInstance_2);
+    Assert.IsFalse(coordinateInstance_2 != coordinateInstance_1);
 
     double delta = 0.000000000000001; // see comments further below regarding the value of "delta"
     CrsCoordinate coordinateInstance_3 = CrsCoordinate.CreateCoordinate(
@@ -113,12 +111,12 @@ void main() {
       stockholmCentralStation_WGS84_longitude + delta,
       stockholmCentralStation_WGS84_latitude + delta
     );
+    Assert.AreEqual(coordinateInstance_1.hashCode, coordinateInstance_3.hashCode);    
     Assert.AreEqual(coordinateInstance_1, coordinateInstance_3);
-    Assert.AreEqual(coordinateInstance_1.GetHashCode(), coordinateInstance_3.GetHashCode());
     Assert.IsTrue(coordinateInstance_1 == coordinateInstance_3); // method "operator =="
     Assert.IsTrue(coordinateInstance_3 == coordinateInstance_1);
-    Assert.IsTrue(coordinateInstance_1.Equals(coordinateInstance_3));
-    Assert.IsTrue(coordinateInstance_3.Equals(coordinateInstance_1));
+    Assert.IsFalse(coordinateInstance_1 != coordinateInstance_3);
+    Assert.IsFalse(coordinateInstance_3 != coordinateInstance_1);    
 
     // Regarding the chosen value for "delta" (which is added to the lon/lat values, to create a slightly different value) above and below,
     // it is because of experimentation this "breakpoint" value has been determined, i.e. the above value still resulted in equality 
@@ -134,15 +132,13 @@ void main() {
       stockholmCentralStation_WGS84_latitude + delta
     );
     // Note that below are the Are*NOT*Equal assertions made instead of AreEqual as further above when a smaller delta value was used
-    Assert.AreNotEqual(coordinateInstance_1, coordinateInstance_4);
-    Assert.AreNotEqual(coordinateInstance_1.GetHashCode(), coordinateInstance_4.GetHashCode());
     Assert.IsTrue(coordinateInstance_1 != coordinateInstance_4); // Note that the method "operator !=" becomes used here
     Assert.IsTrue(coordinateInstance_4 != coordinateInstance_1);
-    Assert.IsFalse(coordinateInstance_1.Equals(coordinateInstance_4));
-    Assert.IsFalse(coordinateInstance_4.Equals(coordinateInstance_1));
+    Assert.IsFalse(coordinateInstance_4 == coordinateInstance_1);
+    Assert.IsFalse(coordinateInstance_4 == coordinateInstance_1);
   });
 
-
+/*
   [Test]
   public void ToStringTest() {
     CrsCoordinate coordinate = CrsCoordinate.CreateCoordinate(CrsProjection.sweref_99_18_00, 153369.673, 6579457.649);
