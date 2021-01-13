@@ -13,6 +13,7 @@
 /// </summary>
 /// 
 import './crs_projection.dart';
+import './crs_projection_extensions.dart';
 import './crs_projection_factory.dart';
 import './transformation/transformer.dart';
 
@@ -118,9 +119,13 @@ class CrsCoordinate {
   /// "CrsCoordinate [ X: 153369.673 , Y: 6579457.649 , CRS: SWEREF_99_18_00 ]"
   /// "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]"
   /// </summary>
-  // public override string ToString() {
-  //   return _toStringImplementation(this);
-  // }
+  @override
+  String toString() {
+    bool isWgs84 =  this.crsProjection.isWgs84();
+    String xOrLongitude = isWgs84 ? "Longitude" : "X";
+    String yOrLatitude = isWgs84 ? "Latitude" : "Y";    
+    return "CrsCoordinate [ ${xOrLongitude}: $LongitudeX , ${yOrLatitude}: $LatitudeY , CRS: ${crsProjection.getAsString()} ]";
+  }
 
 /*
   private static Func<CrsCoordinate, string> _toStringImplementation = defaultToStringImplementation;

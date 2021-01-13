@@ -138,28 +138,27 @@ void main() {
     Assert.IsFalse(coordinateInstance_4 == coordinateInstance_1);
   });
 
-/*
-  [Test]
-  public void ToStringTest() {
+
+  test('toStringTest', () {
     CrsCoordinate coordinate = CrsCoordinate.CreateCoordinate(CrsProjection.sweref_99_18_00, 153369.673, 6579457.649);
     Assert.AreEqual(
       "CrsCoordinate [ X: 153369.673 , Y: 6579457.649 , CRS: SWEREF_99_18_00 ]",
-      coordinate.ToString()
+      coordinate.toString()
     );
     CrsCoordinate coordinate2 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, 18.059196, 59.330231);
     Assert.AreEqual(
-      "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]",
-      coordinate2.ToString()
+       "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]",
+       coordinate2.toString()
     );
-    // now testing the same coordinate as above but with a custom 'ToString' implementation
-    CrsCoordinate.SetToStringImplementation(myCustomToStringMethod);
-    Assert.AreEqual(
-      "59.330231 , 18.059196",
-      coordinate2.ToString()
-    );
-    CrsCoordinate.SetToStringImplementationDefault(); // restores the default 'ToString' implementation
+    // // now testing the same coordinate as above but with a custom 'ToString' implementation
+    // CrsCoordinate.SetToStringImplementation(myCustomToStringMethod);
+    // Assert.AreEqual(
+    //   "59.330231 , 18.059196",
+    //   coordinate2.ToString()
+    // );
+    // CrsCoordinate.SetToStringImplementationDefault(); // restores the default 'ToString' implementation
   });
-
+/*
   string _myCustomToStringMethod(CrsCoordinate coordinate) {
     return string.Format(
       "{0} , {1}",
