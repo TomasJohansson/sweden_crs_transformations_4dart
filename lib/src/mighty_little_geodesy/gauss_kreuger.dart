@@ -1,11 +1,11 @@
-﻿// dart lib/src/mighty_little_geodesy/gauss_kreuger.dart
-/*
+﻿/*
 * Copyright (c) Tomas Johansson , http://www.programmerare.com
 * The code in this library is licensed with MIT.
-* The library is based on the library 'MightyLittleGeodesy' (https://github.com/bjornsallarp/MightyLittleGeodesy/) 
+* The library is based on the C#.NET library 'sweden_crs_transformations_4net' (https://github.com/TomasJohansson/sweden_crs_transformations_4net)
+* which in turn is based on 'MightyLittleGeodesy' (https://github.com/bjornsallarp/MightyLittleGeodesy/) 
 * which is also released with MIT.
 * For more information see the webpage below.
-* https://github.com/TomasJohansson/sweden_crs_transformations
+* https://github.com/TomasJohansson/sweden_crs_transformations_4dart
 */
 
 // This project is based on the library [MightyLittleGeodesy](https://github.com/bjornsallarp/MightyLittleGeodesy/)
@@ -29,6 +29,10 @@
 //      - removed the if/else statements in the above method "swedish_params" which used the projection strings beginning with "bessel_rt90"
 // 
 // For more details about exactly what has changed in this GaussKreuger class, you can also use a git client with "compare" or "blame" features to see the changes)
+
+// Note that the above changes were copied from the C# project which modified the GaussKreuger class.
+// But later this file has been ported to the programming language Dart, and thus some more modifications,
+// but for those details about what has changed when porting from C# to Dart, please see the git repository with the source code.
 
 // ------------------------------------------------------------------------------------------
 // The below comment block is kept from the original source file (see the above github URL)
@@ -70,7 +74,8 @@
   * Source: Arnold Andreasson, 2007. http://mellifica.se/konsult
   * Author: Björn Sållarp. 2009. http://blog.sallarp.com
   * 
-  * Some modifications in this file were made 2021 by Tomas Johansson.
+  * Modifications in this file were made 2021 by Tomas Johansson, first in a C# project.
+  * But later more changes of course when it was ported to the programming language Dart in this source file.
   * For details about changes, you should be able to use the github repository to see the git history where you found this source code file.
   */
 import 'dart:math' as Math;
