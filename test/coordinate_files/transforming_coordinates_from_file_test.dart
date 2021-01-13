@@ -72,12 +72,7 @@ void main() {
     CrsProjection targetCrs = targetCoordinateExpected.crsProjection;
     CrsCoordinate targetCoordinate = sourceCoordinate.transform(targetCrs);
     bool isTargetEpsgWgs84 = targetCrs.isWgs84();
-    // this maxDifference below worked with the C# implementation:
-    //  double maxDifference = isTargetEpsgWgs84 ? 0.000003 : 0.2;
-    // but with this Dart implementation there is one difference larger than 0.48 that will fail
-    //  (when transforming  wgs84 ==> sweref_99_13_30)
-    // double maxDifference = isTargetEpsgWgs84 ? 0.000003 : 0.48; // fails with Dart (see above comment)
-    final maxDifference = isTargetEpsgWgs84 ? 0.000003 : 0.5; // the other (i.e. non-WGS84) are using meter as unit, so 0.5 is just five decimeters difference
+    final maxDifference = isTargetEpsgWgs84 ? 0.000003 : 0.2; // the other (i.e. non-WGS84) are using meter as unit, so 0.2 is just two decimeters difference
     final diffLongitude = ((targetCoordinate.LongitudeX - targetCoordinateExpected.LongitudeX)).abs();
     final diffLatitude = ((targetCoordinate.LatitudeY - targetCoordinateExpected.LatitudeY)).abs();
 

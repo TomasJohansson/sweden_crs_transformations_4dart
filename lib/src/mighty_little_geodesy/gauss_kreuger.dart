@@ -288,8 +288,8 @@ class GaussKreuger
                 beta3 * Math.cos(6.0 * xi_prim) * _math_sinh(6.0 * eta_prim) +
                 beta4 * Math.cos(8.0 * xi_prim) * _math_sinh(8.0 * eta_prim)) +
                 _false_easting;
-    x_y[0] = ((x * 1000.0) / 1000.0).roundToDouble();
-    x_y[1] = ((y * 1000.0) / 1000.0).roundToDouble();
+    x_y[0] = ((x * 1000.0)).roundToDouble() / 1000.0;
+    x_y[1] = ((y * 1000.0)).roundToDouble() / 1000.0;
     var lonLat = LonLat(x_y[1], x_y[0]);
     return lonLat; //return x_y;
   }
