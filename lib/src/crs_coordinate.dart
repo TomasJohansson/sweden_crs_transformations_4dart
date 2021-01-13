@@ -29,20 +29,20 @@ class CrsCoordinate {
   /// <summary>
   /// The coordinate value representing the longitude or X or Easting.
   /// </summary>    
-  final double LongitudeX;
+  final double xLongitude;
 
   /// <summary>
   /// The coordinate value representing the latitude or Y or Northing.
   /// </summary>
-  final double LatitudeY;
+  final double yLatitude;
 
   /// <summary>
   /// Private constructor. Client code must instead use the public factory methods.
   /// </summary>
   CrsCoordinate._privateConstructor(
     this.crsProjection,
-    this.LongitudeX,
-    this.LatitudeY
+    this.xLongitude,
+    this.yLatitude
   );
 
   /// <summary>
@@ -98,8 +98,8 @@ class CrsCoordinate {
     if(other is CrsCoordinate) {
       return other != null &&
         this.crsProjection == other.crsProjection &&
-        this.LongitudeX == other.LongitudeX &&
-        this.LatitudeY == other.LatitudeY;
+        this.xLongitude == other.xLongitude &&
+        this.yLatitude == other.yLatitude;
     }
     return true;
   }
@@ -109,8 +109,8 @@ class CrsCoordinate {
 
   @override
   int get hashCode {
-    var result = LongitudeX.hashCode;
-    result = 31 * result + LatitudeY.hashCode;
+    var result = xLongitude.hashCode;
+    result = 31 * result + yLatitude.hashCode;
     result = 31 * result + crsProjection.hashCode;
     return result;
   }  
@@ -131,7 +131,7 @@ class CrsCoordinate {
     bool isWgs84 =  coordinate.crsProjection.isWgs84();
     String xOrLongitude = isWgs84 ? "Longitude" : "X";
     String yOrLatitude = isWgs84 ? "Latitude" : "Y";    
-    return "CrsCoordinate [ ${xOrLongitude}: ${coordinate.LongitudeX} , ${yOrLatitude}: ${coordinate.LatitudeY} , CRS: ${coordinate.crsProjection.getAsString()} ]";
+    return "CrsCoordinate [ ${xOrLongitude}: ${coordinate.xLongitude} , ${yOrLatitude}: ${coordinate.yLatitude} , CRS: ${coordinate.crsProjection.getAsString()} ]";
   }
 
   /// <summary>

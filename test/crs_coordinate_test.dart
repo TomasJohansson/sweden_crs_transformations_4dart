@@ -81,8 +81,8 @@ void main() {
     const double y = 60.0;
     CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinateByEpsgNumber(epsgNumberForSweref99tm, x, y);
     Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.crsProjection.getEpsgNumber());
-    Assert.AreEqual(x, crsCoordinate.LongitudeX);
-    Assert.AreEqual(y, crsCoordinate.LatitudeY);
+    Assert.AreEqual(x, crsCoordinate.xLongitude);
+    Assert.AreEqual(y, crsCoordinate.yLatitude);
   });
 
   test('createCoordinate', () {
@@ -91,8 +91,8 @@ void main() {
     CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinate(CrsProjection.sweref_99_tm, x, y);
     Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.crsProjection.getEpsgNumber());
     Assert.AreEqual(CrsProjection.sweref_99_tm, crsCoordinate.crsProjection);
-    Assert.AreEqual(x, crsCoordinate.LongitudeX);
-    Assert.AreEqual(y, crsCoordinate.LatitudeY);
+    Assert.AreEqual(x, crsCoordinate.xLongitude);
+    Assert.AreEqual(y, crsCoordinate.yLatitude);
   });
 
   test('equalityTest', () {
@@ -223,13 +223,13 @@ void main() {
   void _AssertEqual(CrsCoordinate crsCoordinate_1, CrsCoordinate crsCoordinate_2)  {
     Assert.AreEqual(crsCoordinate_1.crsProjection, crsCoordinate_2.crsProjection);
     double maxDifference = crsCoordinate_1.crsProjection.isWgs84() ? 0.000007 : 0.5; // the other (i.e. non-WGS84) value is using meter as unit, so 0.5 is just five decimeters difference
-    double diffLongitude = ((crsCoordinate_1.LongitudeX - crsCoordinate_2.LongitudeX)).abs();
-    double diffLatitude = ((crsCoordinate_1.LatitudeY - crsCoordinate_2.LatitudeY)).abs();            
+    double diffLongitude = ((crsCoordinate_1.xLongitude - crsCoordinate_2.xLongitude)).abs();
+    double diffLatitude = ((crsCoordinate_1.yLatitude - crsCoordinate_2.yLatitude)).abs();            
     
     Assert.IsTrue(diffLongitude < maxDifference);
     Assert.IsTrue(diffLatitude < maxDifference);
   }
 
 String _myCustomToStringFunction(CrsCoordinate coordinate) {
-  return "${coordinate.LatitudeY} , ${coordinate.LongitudeX}";
+  return "${coordinate.yLatitude} , ${coordinate.xLongitude}";
 }

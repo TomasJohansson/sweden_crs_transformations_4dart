@@ -73,15 +73,15 @@ void main() {
     CrsCoordinate targetCoordinate = sourceCoordinate.transform(targetCrs);
     bool isTargetEpsgWgs84 = targetCrs.isWgs84();
     final maxDifference = isTargetEpsgWgs84 ? 0.000003 : 0.2; // the other (i.e. non-WGS84) are using meter as unit, so 0.2 is just two decimeters difference
-    final diffLongitude = ((targetCoordinate.LongitudeX - targetCoordinateExpected.LongitudeX)).abs();
-    final diffLatitude = ((targetCoordinate.LatitudeY - targetCoordinateExpected.LatitudeY)).abs();
+    final diffLongitude = ((targetCoordinate.xLongitude - targetCoordinateExpected.xLongitude)).abs();
+    final diffLatitude = ((targetCoordinate.yLatitude - targetCoordinateExpected.yLatitude)).abs();
 
     if (diffLongitude > maxDifference || diffLatitude > maxDifference) {
       String problem = 
         "Projection ${sourceCoordinate.crsProjection} ==> ${targetCoordinateExpected.crsProjection} , diffLongitude ${diffLongitude}  , diffLatitude ${diffLatitude}"
-        + "sourceCoordinate xLongitude/yLatitude: ${sourceCoordinate.LongitudeX}/${sourceCoordinate.LatitudeY}" 
-        + "targetCoordinate xLongitude/yLatitude: ${targetCoordinate.LongitudeX}/${targetCoordinate.LatitudeY}" 
-        + "targetCoordinateExpected xLongitude/yLatitude: ${targetCoordinateExpected.LongitudeX}/${targetCoordinateExpected.LatitudeY}";
+        + "sourceCoordinate xLongitude/yLatitude: ${sourceCoordinate.xLongitude}/${sourceCoordinate.yLatitude}" 
+        + "targetCoordinate xLongitude/yLatitude: ${targetCoordinate.xLongitude}/${targetCoordinate.yLatitude}" 
+        + "targetCoordinateExpected xLongitude/yLatitude: ${targetCoordinateExpected.xLongitude}/${targetCoordinateExpected.yLatitude}";
       problemTransformationResults.add(problem);
     }
   }
