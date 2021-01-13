@@ -145,27 +145,31 @@ void main() {
       "CrsCoordinate [ X: 153369.673 , Y: 6579457.649 , CRS: SWEREF_99_18_00 ]",
       coordinate.toString()
     );
+
+    
+
     CrsCoordinate coordinate2 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, 18.059196, 59.330231);
+    const expectedDefaultToStringResultForCoordinate2 = "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]";
     Assert.AreEqual(
-       "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]",
+       expectedDefaultToStringResultForCoordinate2,
        coordinate2.toString()
     );
-    // // now testing the same coordinate as above but with a custom 'ToString' implementation
-    // CrsCoordinate.SetToStringImplementation(myCustomToStringMethod);
-    // Assert.AreEqual(
-    //   "59.330231 , 18.059196",
-    //   coordinate2.ToString()
-    // );
-    // CrsCoordinate.SetToStringImplementationDefault(); // restores the default 'ToString' implementation
+
+    // now below testing the same coordinate as above but with a custom 'ToString' implementation
+    CrsCoordinate.setToStringImplementation(_myCustomToStringFunction);
+    Assert.AreEqual(
+      "59.330231 , 18.059196",
+      coordinate2.toString()
+    );
+    
+    CrsCoordinate.setToStringImplementationDefault(); // restores the default 'ToString' implementation
+    Assert.AreEqual(
+       expectedDefaultToStringResultForCoordinate2,
+       coordinate2.toString()
+    );    
   });
 /*
-  string _myCustomToStringMethod(CrsCoordinate coordinate) {
-    return string.Format(
-      "{0} , {1}",
-        coordinate.LatitudeY,
-        coordinate.LongitudeX
-    );
-  }
+
 
 
   // This is not really a "Test" method used for assertions, but can be used for code examples 
@@ -225,3 +229,7 @@ void main() {
     Assert.IsTrue(diffLongitude < maxDifference);
     Assert.IsTrue(diffLatitude < maxDifference);
   }
+
+String _myCustomToStringFunction(CrsCoordinate coordinate) {
+  return "${coordinate.LatitudeY} , ${coordinate.LongitudeX}";
+}

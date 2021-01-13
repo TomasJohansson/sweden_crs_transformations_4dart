@@ -17,6 +17,8 @@ import './crs_projection_extensions.dart';
 import './crs_projection_factory.dart';
 import './transformation/transformer.dart';
 
+typedef CrsCoordinateToString = String Function(CrsCoordinate crsCoordinate); // used for supporting a custom toString implementation
+
 class CrsCoordinate {
 
   /// <summary>
@@ -114,50 +116,36 @@ class CrsCoordinate {
   }  
 
 
-  /// <summary>
+  /// See the method 'defaultToStringImplementation'
+  @override
+  String toString() {
+    return _toStringImplementation(this);
+  }
+
+  static CrsCoordinateToString _toStringImplementation = defaultToStringImplementation;
+
   /// Two examples of the string that can be returned:
   /// "CrsCoordinate [ X: 153369.673 , Y: 6579457.649 , CRS: SWEREF_99_18_00 ]"
   /// "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]"
-  /// </summary>
-  @override
-  String toString() {
-    bool isWgs84 =  this.crsProjection.isWgs84();
+  static String defaultToStringImplementation(CrsCoordinate coordinate) {
+    bool isWgs84 =  coordinate.crsProjection.isWgs84();
     String xOrLongitude = isWgs84 ? "Longitude" : "X";
     String yOrLatitude = isWgs84 ? "Latitude" : "Y";    
-    return "CrsCoordinate [ ${xOrLongitude}: $LongitudeX , ${yOrLatitude}: $LatitudeY , CRS: ${crsProjection.getAsString()} ]";
-  }
-
-/*
-  private static Func<CrsCoordinate, string> _toStringImplementation = defaultToStringImplementation;
-
-  private static string defaultToStringImplementation(CrsCoordinate coordinate) {
-    string crs = coordinate.CrsProjection.ToString().ToUpper();
-    bool isWgs84 =  coordinate.CrsProjection.IsWgs84();
-    string xOrLongitude = isWgs84 ? "Longitude" : "X";
-    string yOrLatitude = isWgs84 ? "Latitude" : "Y";
-    return string.Format(
-      "{0} [ {1}: {2} , {3}: {4} , CRS: {5} ]",
-        nameof(CrsCoordinate),  // 0
-        xOrLongitude,           // 1
-        coordinate.LongitudeX,  // 2
-        yOrLatitude,            // 3
-        coordinate.LatitudeY,   // 4
-        crs                     // 5
-    );
+    return "CrsCoordinate [ ${xOrLongitude}: ${coordinate.LongitudeX} , ${yOrLatitude}: ${coordinate.LatitudeY} , CRS: ${coordinate.crsProjection.getAsString()} ]";
   }
 
   /// <summary>
   /// Sets a custom method to be used for rendering an instance when the 'ToString' method is used.
   /// </summary>
-  public static void SetToStringImplementation(Func<CrsCoordinate, string> toStringImplementation) {
+  static void setToStringImplementation(CrsCoordinateToString toStringImplementation) {
     _toStringImplementation = toStringImplementation;
-  }
+  }  
 
   /// <summary>
   /// Sets the default method to be used for rendering an instance when the 'ToString' method is used.
   /// </summary>
-  public static void SetToStringImplementationDefault() { 
+  static void setToStringImplementationDefault() { 
     _toStringImplementation = defaultToStringImplementation;
   }
-  */
+
 }
