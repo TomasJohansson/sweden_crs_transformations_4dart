@@ -38,40 +38,40 @@ void main() {
     // Transformations to WGS84 (from SWEREF99TM and RT90):
     _AssertEqual(
       stockholmWGS84, // expected WGS84
-      stockholmSWEREF99TM.Transform(CrsProjection.wgs84) // actual/transformed WGS84
+      stockholmSWEREF99TM.transform(CrsProjection.wgs84) // actual/transformed WGS84
     );
     _AssertEqual(
       stockholmWGS84, // expected WGS84
-      stockholmRT90.Transform(CrsProjection.wgs84) // actual/transformed WGS84
+      stockholmRT90.transform(CrsProjection.wgs84) // actual/transformed WGS84
     );
     // below is a similar test as one of the above tests but using the overloaded Transform method
     // which takes an integer as parameter instead of an instance of the enum CrsProjection
     int epsgNumberForWgs84 = CrsProjection.wgs84.getEpsgNumber();
     _AssertEqual(
       stockholmWGS84,
-      stockholmRT90.TransformByEpsgNumber(epsgNumberForWgs84) // testing the overloaded Transform method with an integer parameter
+      stockholmRT90.transformByEpsgNumber(epsgNumberForWgs84) // testing the overloaded Transform method with an integer parameter
     );
 
 
     // Transformations to SWEREF99TM (from WGS84 and RT90):
     _AssertEqual(
       stockholmSWEREF99TM, // expected SWEREF99TM
-      stockholmWGS84.Transform(CrsProjection.sweref_99_tm) // actual/transformed SWEREF99TM
+      stockholmWGS84.transform(CrsProjection.sweref_99_tm) // actual/transformed SWEREF99TM
     );
     _AssertEqual(
       stockholmSWEREF99TM, // expected SWEREF99TM
-      stockholmRT90.Transform(CrsProjection.sweref_99_tm) // actual/transformed SWEREF99TM
+      stockholmRT90.transform(CrsProjection.sweref_99_tm) // actual/transformed SWEREF99TM
     );
 
 
     // Transformations to RT90 (from WGS84 and SWEREF99TM):
     _AssertEqual(
       stockholmRT90,  // expected RT90
-      stockholmWGS84.Transform(CrsProjection.rt90_2_5_gon_v) // actual/transformed RT90
+      stockholmWGS84.transform(CrsProjection.rt90_2_5_gon_v) // actual/transformed RT90
     );
     _AssertEqual(
       stockholmRT90,  // expected RT90
-      stockholmSWEREF99TM.Transform(CrsProjection.rt90_2_5_gon_v) // actual/transformed RT90
+      stockholmSWEREF99TM.transform(CrsProjection.rt90_2_5_gon_v) // actual/transformed RT90
     );
   });
 

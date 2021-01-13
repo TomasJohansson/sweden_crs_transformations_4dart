@@ -47,7 +47,7 @@ class CrsCoordinate { // : IEquatable<CrsCoordinate> {
   /// Transforms the coordinate to another coordinate reference system
   /// </summary>
   /// <param name="targetCrsProjection">the coordinate reference system that you want to transform to</param>        
-  CrsCoordinate Transform(CrsProjection targetCrsProjection) {
+  CrsCoordinate transform(CrsProjection targetCrsProjection) {
     return Transformer.transform(this, targetCrsProjection);
   }
 
@@ -55,9 +55,9 @@ class CrsCoordinate { // : IEquatable<CrsCoordinate> {
   /// Transforms the coordinate to another coordinate reference system
   /// </summary>
   /// <param name="targetEpsgNumber">the coordinate reference system that you want to transform to</param>        
-  CrsCoordinate TransformByEpsgNumber(int targetEpsgNumber) {
+  CrsCoordinate transformByEpsgNumber(int targetEpsgNumber) {
     CrsProjection targetCrsProjection = CrsProjectionFactory.getCrsProjectionByEpsgNumber(targetEpsgNumber);
-    return this.Transform(targetCrsProjection);
+    return this.transform(targetCrsProjection);
   }
 
   /// <summary>
