@@ -7,12 +7,9 @@
 * https://github.com/TomasJohansson/sweden_crs_transformations
 */
 
-namespace SwedenCrsTransformations.Transformation {
-    internal interface TransformStrategy {
-        CrsCoordinate Transform(
-            CrsCoordinate sourceCoordinate,
-            CrsProjection targetCrsProjection
-        );
-    }
-
+internal interface TransformStrategy {
+  CrsCoordinate Transform(
+    CrsCoordinate sourceCoordinate,
+    CrsProjection targetCrsProjection
+  );
 }
