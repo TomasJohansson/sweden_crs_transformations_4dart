@@ -7,8 +7,11 @@
 * https://github.com/TomasJohansson/sweden_crs_transformations
 */
 
-internal interface TransformStrategy {
-  CrsCoordinate Transform(
+import '../crs_coordinate.dart';
+import '../crs_projection.dart';
+
+abstract class TransformStrategy {
+  CrsCoordinate transform(
     CrsCoordinate sourceCoordinate,
     CrsProjection targetCrsProjection
   );

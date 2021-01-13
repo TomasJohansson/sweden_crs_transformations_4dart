@@ -7,13 +7,21 @@
 * https://github.com/TomasJohansson/sweden_crs_transformations
 */
 
-internal class TransformStrategy_from_WGS84_to_SWEREF99_or_RT90 : TransformStrategy {
+import '../crs_coordinate.dart';
+import '../crs_projection.dart';
+import './transform_strategy.dart';
+import '../mighty_little_geodesy/gauss_kreuger.dart';
+import '../mighty_little_geodesy/lon_lat.dart';
+
+class TransformStrategy_from_WGS84_to_SWEREF99_or_RT90 extends TransformStrategy {
   // Precondition: sourceCoordinate must be CRS WGS84
-  public CrsCoordinate Transform(
+  
+  @override
+  CrsCoordinate transform(
     CrsCoordinate sourceCoordinate,
     CrsProjection targetCrsProjection
   ) {
-    var gkProjection = new GaussKreuger();
+    var gkProjection = GaussKreuger();
     gkProjection.swedish_params(targetCrsProjection);
     LonLat lonLat = gkProjection.geodetic_to_grid(sourceCoordinate.LatitudeY, sourceCoordinate.LongitudeX);
     return CrsCoordinate.CreateCoordinate(targetCrsProjection, lonLat.LongitudeX, lonLat.LatitudeY);

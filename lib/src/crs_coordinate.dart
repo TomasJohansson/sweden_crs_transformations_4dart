@@ -1,4 +1,5 @@
-﻿/*
+﻿// dart lib/src/crs_coordinate.dart
+/*
 * Copyright (c) Tomas Johansson , http://www.programmerare.com
 * The code in this library is licensed with MIT.
 * The library is based on the library 'MightyLittleGeodesy' (https://github.com/bjornsallarp/MightyLittleGeodesy/) 
@@ -10,50 +11,52 @@
 /// <summary>
 /// Coordinate, defined by the three parameters for the factory methods.
 /// </summary>
-public class CrsCoordinate : IEquatable<CrsCoordinate> {
+/// 
+import './crs_projection.dart';
+import './crs_projection_factory.dart';
+import './crs_projection_extensions.dart';
+import './transformation/transformer.dart';
+
+class CrsCoordinate { // : IEquatable<CrsCoordinate> {
 
   /// <summary>
   /// The coordinate reference system that defines the location together with the other two properties (LongitudeX and LatitudeY).
   /// </summary>
-  public CrsProjection CrsProjection { get; private set; }
+  final CrsProjection crsProjection;
 
   /// <summary>
   /// The coordinate value representing the longitude or X or Easting.
   /// </summary>    
-  public double LongitudeX { get; private set; }
+  final double LongitudeX;
 
   /// <summary>
   /// The coordinate value representing the latitude or Y or Northing.
   /// </summary>
-  public double LatitudeY { get; private set; }
+  final double LatitudeY;
 
   /// <summary>
   /// Private constructor. Client code must instead use the public factory methods.
   /// </summary>
-  private CrsCoordinate(
-    CrsProjection crsProjection,
-    double xLongitude,
-    double yLatitude
-  ) {
-    this.CrsProjection = crsProjection;
-    this.LongitudeX = xLongitude;
-    this.LatitudeY = yLatitude;
-  }
+  CrsCoordinate._privateConstructor(
+    this.crsProjection,
+    this.LongitudeX,
+    this.LatitudeY
+  );
 
   /// <summary>
   /// Transforms the coordinate to another coordinate reference system
   /// </summary>
   /// <param name="targetCrsProjection">the coordinate reference system that you want to transform to</param>        
-  public CrsCoordinate Transform(CrsProjection targetCrsProjection) {
-    return Transformer.Transform(this, targetCrsProjection);
+  CrsCoordinate Transform(CrsProjection targetCrsProjection) {
+    return Transformer.transform(this, targetCrsProjection);
   }
 
   /// <summary>
   /// Transforms the coordinate to another coordinate reference system
   /// </summary>
   /// <param name="targetEpsgNumber">the coordinate reference system that you want to transform to</param>        
-  public CrsCoordinate Transform(int targetEpsgNumber) {
-    CrsProjection targetCrsProjection = CrsProjectionFactory.GetCrsProjectionByEpsgNumber(targetEpsgNumber);
+  CrsCoordinate TransformByEpsgNumber(int targetEpsgNumber) {
+    CrsProjection targetCrsProjection = CrsProjectionFactory.getCrsProjectionByEpsgNumber(targetEpsgNumber);
     return this.Transform(targetCrsProjection);
   }
 
@@ -63,12 +66,12 @@ public class CrsCoordinate : IEquatable<CrsCoordinate> {
   /// <param name="epsgNumber">represents the coordinate reference system that defines the location together with the other two parameters</param>
   /// <param name="xLongitude">the coordinate position value representing the longitude or X or Easting</param>
   /// <param name="yLatitude">the coordinate position value representing the latitude or Y or Northing</param>
-  public static CrsCoordinate CreateCoordinate(
+  static CrsCoordinate CreateCoordinateByEpsgNumber(
     int epsgNumber,
     double xLongitude,
     double yLatitude
   ) {
-    CrsProjection crsProjection = CrsProjectionFactory.GetCrsProjectionByEpsgNumber(epsgNumber);
+    CrsProjection crsProjection = CrsProjectionFactory.getCrsProjectionByEpsgNumber(epsgNumber);
     return CreateCoordinate(crsProjection, xLongitude, yLatitude);
   }
 
@@ -79,16 +82,17 @@ public class CrsCoordinate : IEquatable<CrsCoordinate> {
   /// <param name="crsProjection">represents the coordinate reference system that defines the location together with the other two parameters</param>
   /// <param name="xLongitude">the coordinate position value representing the longitude or X or Easting</param>
   /// <param name="yLatitude">the coordinate position value representing the latitude or Y or Northing</param>
-  public static CrsCoordinate CreateCoordinate(
+  static CrsCoordinate CreateCoordinate(
     CrsProjection crsProjection,
     double xLongitude,
     double yLatitude
   ) {
-    return new CrsCoordinate(crsProjection, xLongitude, yLatitude);
+    return CrsCoordinate._privateConstructor(crsProjection, xLongitude, yLatitude);
   }
 
   // ----------------------------------------------------------------------------------------------------------------------
   // These five methods below was generated with Visual Studio 2019
+  /*
   public override bool Equals(object obj) {
     return Equals(obj as CrsCoordinate);
   }
@@ -115,7 +119,7 @@ public class CrsCoordinate : IEquatable<CrsCoordinate> {
   public static bool operator !=(CrsCoordinate left, CrsCoordinate right) {
     return !(left == right);
   }
-
+*/
   // These five methods above was generated with Visual Studio 2019
   // ----------------------------------------------------------------------------------------------------------------------
 
@@ -124,10 +128,11 @@ public class CrsCoordinate : IEquatable<CrsCoordinate> {
   /// "CrsCoordinate [ X: 153369.673 , Y: 6579457.649 , CRS: SWEREF_99_18_00 ]"
   /// "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]"
   /// </summary>
-  public override string ToString() {
-    return _toStringImplementation(this);
-  }
+  // public override string ToString() {
+  //   return _toStringImplementation(this);
+  // }
 
+/*
   private static Func<CrsCoordinate, string> _toStringImplementation = defaultToStringImplementation;
 
   private static string defaultToStringImplementation(CrsCoordinate coordinate) {
@@ -159,4 +164,5 @@ public class CrsCoordinate : IEquatable<CrsCoordinate> {
   public static void SetToStringImplementationDefault() { 
     _toStringImplementation = defaultToStringImplementation;
   }
+  */
 }

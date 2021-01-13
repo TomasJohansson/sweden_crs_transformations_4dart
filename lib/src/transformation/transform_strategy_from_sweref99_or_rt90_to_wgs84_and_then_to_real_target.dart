@@ -7,13 +7,20 @@
 * https://github.com/TomasJohansson/sweden_crs_transformations
 */
 
-internal class TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget : TransformStrategy {
+import '../crs_coordinate.dart';
+import '../crs_projection.dart';
+import './transform_strategy.dart';
+import './transformer.dart';
+
+class TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget extends TransformStrategy {
   // Precondition: sourceCoordinate must be CRS SWEREF99 or RT90
-  public CrsCoordinate Transform(
+  
+  @override
+  CrsCoordinate transform(
     CrsCoordinate sourceCoordinate,
     CrsProjection targetCrsProjection
   ) {
-    var wgs84coordinate = Transformer.Transform(sourceCoordinate, CrsProjection.wgs84);
-    return Transformer.Transform(wgs84coordinate, targetCrsProjection);
+    var wgs84coordinate = Transformer.transform(sourceCoordinate, CrsProjection.wgs84);
+    return Transformer.transform(wgs84coordinate, targetCrsProjection);
   }
 }

@@ -1,19 +1,24 @@
-﻿[TestFixture]
-public class CrsCoordinateTest {
+﻿// dart test/crs_coordinate_test.dart
+import 'package:test/test.dart';
+import 'package:sweden_crs_transformations_4dart/sweden_crs_transformations_4dart.dart';
+import './dot_net_helpers.dart';
+import 'dart:math' as Math;
+
+void main() {
+  const int epsgNumberForSweref99tm = 3006; // https://epsg.org/crs_3006/SWEREF99-TM.html
 
   // https://kartor.eniro.se/m/XRCfh
       //WGS84 decimal (lat, lon)      59.330231, 18.059196
       //RT90 (nord, öst)              6580994, 1628294
       //SWEREF99 TM (nord, öst)       6580822, 674032
-  private const double stockholmCentralStation_WGS84_latitude = 59.330231;
-  private const double stockholmCentralStation_WGS84_longitude = 18.059196;
-  private const double stockholmCentralStation_RT90_northing = 6580994;
-  private const double stockholmCentralStation_RT90_easting = 1628294;
-  private const double stockholmCentralStation_SWEREF99TM_northing = 6580822;
-  private const double stockholmCentralStation_SWEREF99TM_easting = 674032;
+  const double stockholmCentralStation_WGS84_latitude = 59.330231;
+  const double stockholmCentralStation_WGS84_longitude = 18.059196;
+  const double stockholmCentralStation_RT90_northing = 6580994;
+  const double stockholmCentralStation_RT90_easting = 1628294;
+  const double stockholmCentralStation_SWEREF99TM_northing = 6580822;
+  const double stockholmCentralStation_SWEREF99TM_easting = 674032;
 
-  [Test]
-  public void Transform() {
+  test('transform', () {
     CrsCoordinate stockholmWGS84 = CrsCoordinate.CreateCoordinate(
       CrsProjection.wgs84,
       stockholmCentralStation_WGS84_longitude,
@@ -31,77 +36,66 @@ public class CrsCoordinateTest {
     );
 
     // Transformations to WGS84 (from SWEREF99TM and RT90):
-    AssertEqual(
+    _AssertEqual(
       stockholmWGS84, // expected WGS84
       stockholmSWEREF99TM.Transform(CrsProjection.wgs84) // actual/transformed WGS84
     );
-    AssertEqual(
+    _AssertEqual(
       stockholmWGS84, // expected WGS84
       stockholmRT90.Transform(CrsProjection.wgs84) // actual/transformed WGS84
     );
     // below is a similar test as one of the above tests but using the overloaded Transform method
     // which takes an integer as parameter instead of an instance of the enum CrsProjection
-    int epsgNumberForWgs84 = CrsProjection.wgs84.GetEpsgNumber();
-    AssertEqual(
+    int epsgNumberForWgs84 = CrsProjection.wgs84.getEpsgNumber();
+    _AssertEqual(
       stockholmWGS84,
-      stockholmRT90.Transform(epsgNumberForWgs84) // testing the overloaded Transform method with an integer parameter
+      stockholmRT90.TransformByEpsgNumber(epsgNumberForWgs84) // testing the overloaded Transform method with an integer parameter
     );
 
 
     // Transformations to SWEREF99TM (from WGS84 and RT90):
-    AssertEqual(
+    _AssertEqual(
       stockholmSWEREF99TM, // expected SWEREF99TM
       stockholmWGS84.Transform(CrsProjection.sweref_99_tm) // actual/transformed SWEREF99TM
     );
-    AssertEqual(
+    _AssertEqual(
       stockholmSWEREF99TM, // expected SWEREF99TM
       stockholmRT90.Transform(CrsProjection.sweref_99_tm) // actual/transformed SWEREF99TM
     );
 
 
     // Transformations to RT90 (from WGS84 and SWEREF99TM):
-    AssertEqual(
+    _AssertEqual(
       stockholmRT90,  // expected RT90
       stockholmWGS84.Transform(CrsProjection.rt90_2_5_gon_v) // actual/transformed RT90
     );
-    AssertEqual(
+    _AssertEqual(
       stockholmRT90,  // expected RT90
       stockholmSWEREF99TM.Transform(CrsProjection.rt90_2_5_gon_v) // actual/transformed RT90
     );
-  }
-
-  private void AssertEqual(CrsCoordinate crsCoordinate_1, CrsCoordinate crsCoordinate_2)  {
-    Assert.AreEqual(crsCoordinate_1.CrsProjection, crsCoordinate_2.CrsProjection);
-    double maxDifference = crsCoordinate_1.CrsProjection.IsWgs84() ? 0.000007 : 0.5; // the other (i.e. non-WGS84) value is using meter as unit, so 0.5 is just five decimeters difference
-    double diffLongitude = Math.Abs((crsCoordinate_1.LongitudeX - crsCoordinate_2.LongitudeX));
-    double diffLatitude = Math.Abs((crsCoordinate_1.LatitudeY - crsCoordinate_2.LatitudeY));            
-    Assert.IsTrue(diffLongitude < maxDifference);
-    Assert.IsTrue(diffLatitude < maxDifference);
-  }
+  });
 
 
-  [Test]
-  public void CreateCoordinateByEpsgNumber() {
+  test('createCoordinateByEpsgNumber', () {
     const double x = 20.0;
     const double y = 60.0;
-    CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinate(epsgNumberForSweref99tm, x, y);
-    Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.CrsProjection.GetEpsgNumber());
+    CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinateByEpsgNumber(epsgNumberForSweref99tm, x, y);
+    Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.crsProjection.getEpsgNumber());
     Assert.AreEqual(x, crsCoordinate.LongitudeX);
     Assert.AreEqual(y, crsCoordinate.LatitudeY);
-  }
+  });
 
-  [Test]
-  public void CreateCoordinate() {
+  test('createCoordinate', () {
     const double x = 22.5;
     const double y = 62.5;
     CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinate(CrsProjection.sweref_99_tm, x, y);
-    Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.CrsProjection.GetEpsgNumber());
-    Assert.AreEqual(CrsProjection.sweref_99_tm, crsCoordinate.CrsProjection);
+    Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.crsProjection.getEpsgNumber());
+    Assert.AreEqual(CrsProjection.sweref_99_tm, crsCoordinate.crsProjection);
     Assert.AreEqual(x, crsCoordinate.LongitudeX);
     Assert.AreEqual(y, crsCoordinate.LatitudeY);
-  }
+  });
 
-
+/*
   [Test]
   public void EqualityTest() {
     CrsCoordinate coordinateInstance_1 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, stockholmCentralStation_WGS84_longitude, stockholmCentralStation_WGS84_latitude);
@@ -146,7 +140,7 @@ public class CrsCoordinateTest {
     Assert.IsTrue(coordinateInstance_4 != coordinateInstance_1);
     Assert.IsFalse(coordinateInstance_1.Equals(coordinateInstance_4));
     Assert.IsFalse(coordinateInstance_4.Equals(coordinateInstance_1));
-  }
+  });
 
 
   [Test]
@@ -168,9 +162,9 @@ public class CrsCoordinateTest {
       coordinate2.ToString()
     );
     CrsCoordinate.SetToStringImplementationDefault(); // restores the default 'ToString' implementation
-  }
+  });
 
-  private string myCustomToStringMethod(CrsCoordinate coordinate) {
+  string _myCustomToStringMethod(CrsCoordinate coordinate) {
     return string.Format(
       "{0} , {1}",
         coordinate.LatitudeY,
@@ -182,7 +176,7 @@ public class CrsCoordinateTest {
   // This is not really a "Test" method used for assertions, but can be used for code examples 
   // e.g. verify that this code below works and then it can be paste into some example page at github
   //[Test]
-  public void Example() {
+  void Example() {
     CrsCoordinate stockholmWGS84 = CrsCoordinate.CreateCoordinate(
       CrsProjection.wgs84,
       stockholmCentralStation_WGS84_longitude,
@@ -224,4 +218,15 @@ public class CrsCoordinateTest {
     //CrsCoordinate [ X: 1244251.702 , Y: 6587459.595 , CRS: RT90_5_0_GON_O ]
     //CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]
   }
+  */
 }
+
+  void _AssertEqual(CrsCoordinate crsCoordinate_1, CrsCoordinate crsCoordinate_2)  {
+    Assert.AreEqual(crsCoordinate_1.crsProjection, crsCoordinate_2.crsProjection);
+    double maxDifference = crsCoordinate_1.crsProjection.isWgs84() ? 0.000007 : 0.5; // the other (i.e. non-WGS84) value is using meter as unit, so 0.5 is just five decimeters difference
+    double diffLongitude = ((crsCoordinate_1.LongitudeX - crsCoordinate_2.LongitudeX)).abs();
+    double diffLatitude = ((crsCoordinate_1.LatitudeY - crsCoordinate_2.LatitudeY)).abs();            
+    
+    Assert.IsTrue(diffLongitude < maxDifference);
+    Assert.IsTrue(diffLatitude < maxDifference);
+  }
