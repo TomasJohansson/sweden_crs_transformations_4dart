@@ -64,8 +64,7 @@ class Transformer {
       return _transFormStrategy.transform(sourceCoordinate, targetCrsProjection);
     }
 
-    //throw new ArgumentError(string.Format("Unhandled source/target projection transformation: {0} ==> {1}", sourceCoordinate.CrsProjection, targetCrsProjection));
-    throw new ArgumentError("todo");
+    throw new ArgumentError("Unhandled source/target projection transformation: ${sourceCoordinate.crsProjection} ==> ${targetCrsProjection}");
   }
 
 }
