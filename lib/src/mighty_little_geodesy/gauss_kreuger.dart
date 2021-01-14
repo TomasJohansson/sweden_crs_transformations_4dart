@@ -20,10 +20,10 @@
 // That original version has been modified below in this file below but not in a significant way (e.g. the mathematical calculations has not been modified).
 // The modifications:
 //      - changed the class from public to internal i.e. "public class GaussKreuger" ==> "internal class GaussKreuger"
-//      - a new 'LonLat' class is used as return type from two methods instead of returning an array "double[]"
+//      - a new 'LatLon' class is used as return type from two methods instead of returning an array "double[]"
 //              i.e. the two method signatures have changed as below:
-//              "public double[] geodetic_to_grid(double latitude, double longitude)"  ==> "public LonLat geodetic_to_grid(double latitude, double longitude)"
-//              "public double[] grid_to_geodetic(double x, double y)" ==> "public LonLat grid_to_geodetic(double yLatitude, double xLongitude)"
+//              "public double[] geodetic_to_grid(double latitude, double longitude)"  ==> "public LatLon geodetic_to_grid(double latitude, double longitude)"
+//              "public double[] grid_to_geodetic(double x, double y)" ==> "public LatLon grid_to_geodetic(double yLatitude, double xLongitude)"
 //      - renamed and changed order of the parameters for the method "grid_to_geodetic" (see the above line)
 //      - changed the method "swedish_params" to use an enum as parameter instead of string, i.e. the method signature changed as below:
 //              "public void swedish_params(string projection)" ==> "public void swedish_params(CrsProjection projection)"
@@ -32,9 +32,10 @@
 // 
 // For more details about exactly what has changed in this GaussKreuger class, you can also use a git client with "compare" or "blame" features to see the changes)
 
-// Note that the above changes were copied from the C# project which modified the GaussKreuger class.
+// Note that most of the above changes were copied from the C# project which modified the GaussKreuger class.
 // But later this file has been ported to the programming language Dart, and thus some more modifications,
 // but for those details about what has changed when porting from C# to Dart, please see the git repository with the source code.
+// (also be aware that some further updates may have been made in the Dart project without being mentioned above in the above comments that mostly was copied from the C# library)
 
 // ------------------------------------------------------------------------------------------
 // The below comment block is kept from the original source file (see the above github URL)
@@ -255,7 +256,7 @@ class GaussKreuger
   }
 
   /// Conversion from geodetic coordinates to grid coordinates.
-  LonLat geodetic_to_grid(double latitude, double longitude) // public double[] geodetic_to_grid(double latitude, double longitude)
+  LatLon geodetic_to_grid(double latitude, double longitude) // public double[] geodetic_to_grid(double latitude, double longitude)
   {
     List<double> x_y = [0.0, 0.0];
 
@@ -299,17 +300,17 @@ class GaussKreuger
                 _false_easting;
     x_y[0] = ((x * 1000.0)).roundToDouble() / 1000.0;
     x_y[1] = ((y * 1000.0)).roundToDouble() / 1000.0;
-    var lonLat = LonLat(x_y[1], x_y[0]);
-    return lonLat; //return x_y;
+    var latLon = LatLon(x_y[0], x_y[1]);
+    return latLon; //return x_y;
   }
 
   /// Conversion from grid coordinates to geodetic coordinates.
-  LonLat grid_to_geodetic(double yLatitude, double xLongitude) // public double[] grid_to_geodetic(double yLatitude, double xLongitude)
+  LatLon grid_to_geodetic(double yLatitude, double xLongitude) // public double[] grid_to_geodetic(double yLatitude, double xLongitude)
   {
     List<double> lat_lon = [0.0, 0.0];
     if (_central_meridian == double.minPositive)
     {
-      return new LonLat(lat_lon[0], lat_lon[1]);
+      return new LatLon(lat_lon[1], lat_lon[0]);
     }
     // Prepare ellipsoid-based stuff.
     double e2 = _flattening * (2.0 - _flattening);
@@ -350,8 +351,8 @@ class GaussKreuger
                       Dstar * Math.pow(Math.sin(phi_star), 6));
     lat_lon[0] = lat_radian * 180.0 / Math.pi;
     lat_lon[1] = lon_radian * 180.0 / Math.pi;
-    var lonLat = LonLat(lat_lon[1], lat_lon[0]);
-    return lonLat; // return lat_lon;
+    var latLon = LatLon(lat_lon[0], lat_lon[1]);
+    return latLon; // return lat_lon;
   }
 
 

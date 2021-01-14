@@ -12,10 +12,10 @@
 
 /// Helper class for the 'GaussKreuger' class.
 /// This class was not part of the original 'MightyLittleGeodesy'
-/// but the class 'GaussKreuger' has later been changed to return this 'LonLat' instead of array 'double[]'
-class LonLat {
-  double LongitudeX;
-  double LatitudeY;
+/// but the class 'GaussKreuger' has later been changed to return this 'LatLon' instead of array 'double[]'
+class LatLon {
+  double xLongitude;
+  double yLatitude;
   
-  LonLat(this.LongitudeX, this.LatitudeY);
+  LatLon(this.yLatitude, this.xLongitude);
 }
