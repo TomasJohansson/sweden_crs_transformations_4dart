@@ -20,6 +20,7 @@ import '../mighty_little_geodesy/lon_lat.dart';
 class TransformStrategy_from_SWEREF99_or_RT90_to_WGS84 extends TransformStrategy {
   // Precondition: sourceCoordinate must be CRS SWEREF99 or RT90
   
+  /// See the comment for the interface (abstract base class)
   @override
   CrsCoordinate transform(
     CrsCoordinate sourceCoordinate,

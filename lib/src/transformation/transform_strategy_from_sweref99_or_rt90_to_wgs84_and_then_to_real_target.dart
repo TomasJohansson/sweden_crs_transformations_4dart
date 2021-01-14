@@ -19,6 +19,7 @@ import './transformer.dart';
 class TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget extends TransformStrategy {
   // Precondition: sourceCoordinate must be CRS SWEREF99 or RT90
   
+  /// See the comment for the interface (abstract base class)
   @override
   CrsCoordinate transform(
     CrsCoordinate sourceCoordinate,

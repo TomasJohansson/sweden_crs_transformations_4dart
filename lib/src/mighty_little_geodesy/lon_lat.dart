@@ -10,8 +10,9 @@
 * https://github.com/TomasJohansson/sweden_crs_transformations_4dart
 */
 
-// This class was not part of the original 'MightyLittleGeodesy'
-// but the class 'GaussKreuger' has later been changed to return this 'LonLat' instead of array 'double[]'
+/// Helper class for the 'GaussKreuger' class.
+/// This class was not part of the original 'MightyLittleGeodesy'
+/// but the class 'GaussKreuger' has later been changed to return this 'LonLat' instead of array 'double[]'
 class LonLat {
   double LongitudeX;
   double LatitudeY;

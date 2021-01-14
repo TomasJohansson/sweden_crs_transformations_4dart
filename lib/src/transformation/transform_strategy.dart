@@ -15,6 +15,9 @@ import '../crs_projection.dart';
 
 /// Intended to be an internal class, i.e. not exported from the library (i.e. in the file 'sweden_crs_transformations_4dart.dart')
 abstract class TransformStrategy {
+
+  /// Transforms a [sourceCoordinate] (which includes the coordinate reference system as a property)
+  /// to a coordinate in another coordinate reference system i.e. the [targetCrsProjection]  
   CrsCoordinate transform(
     CrsCoordinate sourceCoordinate,
     CrsProjection targetCrsProjection

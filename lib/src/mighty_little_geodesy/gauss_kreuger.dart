@@ -80,7 +80,7 @@
   * But later more changes of course when it was ported to the programming language Dart in this source file.
   * For details about changes, you should be able to use the github repository to see the git history where you found this source code file.
   */
-import 'dart:math' as Math;
+import 'dart:math' as Math; // uppercased alias to make it more look like the original C# file e.g. when comparing with WinMerge or similar diff utility
 import '../crs_projection.dart';
 import 'lon_lat.dart';
 
@@ -93,12 +93,12 @@ class GaussKreuger
   double _false_northing; // Offset for origo.
   double _false_easting; // Offset for origo.
 
-  // Parameters for RT90 and SWEREF99TM.
-  // Note: Parameters for RT90 are choosen to eliminate the 
-  // differences between Bessel and GRS80-ellipsoides.
-  // Bessel-variants should only be used if lat/long are given as
-  // RT90-lat/long based on the Bessel ellipsoide (from old maps).
-  // Parameter: projection (string). Must match if-statement.
+  /// Parameters for RT90 and SWEREF99TM.
+  /// Note: Parameters for RT90 are choosen to eliminate the 
+  /// differences between Bessel and GRS80-ellipsoides.
+  /// Bessel-variants should only be used if lat/long are given as
+  /// RT90-lat/long based on the Bessel ellipsoide (from old maps).
+  /// Parameter: projection (string). Must match if-statement.
   void swedish_params(CrsProjection projection)
   {
     // RT90 parameters, GRS 80 ellipsoid.
@@ -226,7 +226,7 @@ class GaussKreuger
     }
   }
 
-  // Sets of default parameters.
+  /// Sets of default parameters.
   void _grs80_params()
   {
     _axis = 6378137.0; // GRS 80.
@@ -242,6 +242,8 @@ class GaussKreuger
     _false_northing = 0.0;
     _false_easting = 1500000.0;
   }
+
+  /// Sets default parameters for sweref99.
   void _sweref99_params()
   {
     _axis = 6378137.0; // GRS 80.
@@ -252,7 +254,7 @@ class GaussKreuger
     _false_easting = 150000.0;
   }
 
-  // Conversion from geodetic coordinates to grid coordinates.
+  /// Conversion from geodetic coordinates to grid coordinates.
   LonLat geodetic_to_grid(double latitude, double longitude) // public double[] geodetic_to_grid(double latitude, double longitude)
   {
     List<double> x_y = [0.0, 0.0];
@@ -301,8 +303,7 @@ class GaussKreuger
     return lonLat; //return x_y;
   }
 
-  // Conversion from grid coordinates to geodetic coordinates.
-
+  /// Conversion from grid coordinates to geodetic coordinates.
   LonLat grid_to_geodetic(double yLatitude, double xLongitude) // public double[] grid_to_geodetic(double yLatitude, double xLongitude)
   {
     List<double> lat_lon = [0.0, 0.0];

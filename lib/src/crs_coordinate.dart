@@ -22,7 +22,7 @@ typedef CrsCoordinateToString = String Function(CrsCoordinate crsCoordinate);
 /// Coordinate, defined by the three parameters for the factory methods.
 class CrsCoordinate {
 
-  /// The coordinate reference system that defines the location together with the other two properties (LongitudeX and LatitudeY).
+  /// The coordinate reference system that defines the location together with the other two properties (xLongitude and yLatitude).
   final CrsProjection crsProjection;
 
   /// The coordinate value representing the longitude or X or Easting.
@@ -114,8 +114,8 @@ class CrsCoordinate {
   static CrsCoordinateToString _toStringImplementation = defaultToStringImplementation;
 
   /// Two examples of the string that can be returned:
-  /// "CrsCoordinate [ X: 153369.673 , Y: 6579457.649 , CRS: SWEREF_99_18_00 ]"
-  /// "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]"
+  /// "CrsCoordinate [ Y: 6579457.649 , X: 153369.673 , CRS: SWEREF_99_18_00 ]"
+  /// "CrsCoordinate [ Latitude: 59.330231 , Longitude: 18.059196 , CRS: WGS84 ]"
   static String defaultToStringImplementation(CrsCoordinate coordinate) {
     bool isWgs84 =  coordinate.crsProjection.isWgs84();
     String yOrLatitude = isWgs84 ? "Latitude" : "Y";        

@@ -30,6 +30,8 @@ class Transformer {
   // Implementation first transforming to WGS84 and then to the real target:
   static TransformStrategy _transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget  = TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget();
 
+  /// Transforms a [sourceCoordinate] (which includes the coordinate reference system as a property)
+  /// to a coordinate in another coordinate reference system i.e. the [targetCrsProjection]
   static CrsCoordinate transform(CrsCoordinate sourceCoordinate, CrsProjection targetCrsProjection) {
     if(sourceCoordinate.crsProjection == targetCrsProjection) return sourceCoordinate;
 
