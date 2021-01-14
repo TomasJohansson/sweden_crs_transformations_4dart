@@ -83,7 +83,7 @@
   */
 import 'dart:math' as Math; // uppercased alias to make it more look like the original C# file e.g. when comparing with WinMerge or similar diff utility
 import '../crs_projection.dart';
-import 'lon_lat.dart';
+import 'lat_lon.dart';
 
 class GaussKreuger
 {

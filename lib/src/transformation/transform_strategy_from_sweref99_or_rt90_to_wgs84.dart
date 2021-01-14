@@ -14,7 +14,7 @@ import '../crs_coordinate.dart';
 import '../crs_projection.dart';
 import './transform_strategy.dart';
 import '../mighty_little_geodesy/gauss_kreuger.dart';
-import '../mighty_little_geodesy/lon_lat.dart';
+import '../mighty_little_geodesy/lat_lon.dart';
 
 /// Intended to be an internal class, i.e. not exported from the library (i.e. in the file 'sweden_crs_transformations_4dart.dart')
 class TransformStrategy_from_SWEREF99_or_RT90_to_WGS84 extends TransformStrategy {
