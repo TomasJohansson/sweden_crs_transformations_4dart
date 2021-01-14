@@ -34,8 +34,8 @@ class CrsCoordinate {
   /// Private constructor. Client code must instead use the public factory methods.
   CrsCoordinate._privateConstructor(
     this.crsProjection,
-    this.xLongitude,
-    this.yLatitude
+    this.yLatitude,    
+    this.xLongitude
   );
 
   /// Transforms the coordinate to another coordinate reference system.
@@ -57,11 +57,11 @@ class CrsCoordinate {
   /// [yLatitude] is the coordinate position value representing the latitude or Y or Northing
   static CrsCoordinate CreateCoordinateByEpsgNumber(
     int epsgNumber,
-    double xLongitude,
-    double yLatitude
+    double yLatitude,    
+    double xLongitude
   ) {
     CrsProjection crsProjection = CrsProjectionFactory.getCrsProjectionByEpsgNumber(epsgNumber);
-    return CreateCoordinate(crsProjection, xLongitude, yLatitude);
+    return CreateCoordinate(crsProjection, yLatitude, xLongitude);
   }
 
   /// Factory method for creating an instance.
@@ -71,10 +71,10 @@ class CrsCoordinate {
   /// See also [CrsProjection]
   static CrsCoordinate CreateCoordinate(
     CrsProjection crsProjection,
-    double xLongitude,
-    double yLatitude
+    double yLatitude,    
+    double xLongitude
   ) {
-    return CrsCoordinate._privateConstructor(crsProjection, xLongitude, yLatitude);
+    return CrsCoordinate._privateConstructor(crsProjection, yLatitude, xLongitude);
   }
 
   @override
@@ -118,9 +118,9 @@ class CrsCoordinate {
   /// "CrsCoordinate [ Longitude: 18.059196 , Latitude: 59.330231 , CRS: WGS84 ]"
   static String defaultToStringImplementation(CrsCoordinate coordinate) {
     bool isWgs84 =  coordinate.crsProjection.isWgs84();
+    String yOrLatitude = isWgs84 ? "Latitude" : "Y";        
     String xOrLongitude = isWgs84 ? "Longitude" : "X";
-    String yOrLatitude = isWgs84 ? "Latitude" : "Y";    
-    return "CrsCoordinate [ ${xOrLongitude}: ${coordinate.xLongitude} , ${yOrLatitude}: ${coordinate.yLatitude} , CRS: ${coordinate.crsProjection.getAsString()} ]";
+    return "CrsCoordinate [ ${yOrLatitude}: ${coordinate.yLatitude} , ${xOrLongitude}: ${coordinate.xLongitude} , CRS: ${coordinate.crsProjection.getAsString()} ]";
   }
 
   /// Sets a custom method to be used for rendering an instance when the 'toString' method is used.
