@@ -22,13 +22,13 @@ import './transform_strategy_from_wgs84_to_sweref99_or_rt90.dart';
 class Transformer {
 
   // Implementations of transformations from WGS84:
-  static TransformStrategy _transformStrategy_from_WGS84_to_SWEREF99_or_RT90 = TransformStrategy_from_WGS84_to_SWEREF99_or_RT90();
+  static final TransformStrategy _transformStrategy_from_WGS84_to_SWEREF99_or_RT90 = TransformStrategy_from_WGS84_to_SWEREF99_or_RT90();
 
   // Implementations of transformations to WGS84:
-  static TransformStrategy _transformStrategy_from_SWEREF99_or_RT90_to_WGS84 = TransformStrategy_from_SWEREF99_or_RT90_to_WGS84();
+  static final TransformStrategy _transformStrategy_from_SWEREF99_or_RT90_to_WGS84 = TransformStrategy_from_SWEREF99_or_RT90_to_WGS84();
 
   // Implementation first transforming to WGS84 and then to the real target:
-  static TransformStrategy _transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget  = TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget();
+  static final TransformStrategy _transFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget  = TransFormStrategy_From_Sweref99OrRT90_to_WGS84_andThenToRealTarget();
 
   /// Transforms a [sourceCoordinate] (which includes the coordinate reference system as a property)
   /// to a coordinate in another coordinate reference system i.e. the [targetCrsProjection]
