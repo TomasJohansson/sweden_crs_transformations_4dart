@@ -10,13 +10,13 @@
 * https://github.com/TomasJohansson/sweden_crs_transformations_4dart
 */
 
-/// Factory class with methods for getting all projections, and for getting one projection by its EPSG number.
-/// (since such custom methods can not be located within the CrsProjection enum type itself)
-/// See also [CrsProjection]
-
 import 'crs_projection.dart';
 import 'crs_projection_extensions.dart';
 
+
+/// Factory class with methods for getting all projections, and for getting one projection by its EPSG number.
+/// (since such custom methods can not be located within the CrsProjection enum type itself)
+/// See also [CrsProjection]
 class CrsProjectionFactory {
 
   /// Factory method creating an enum 'CrsProjection' by its number (EPSG) value.
