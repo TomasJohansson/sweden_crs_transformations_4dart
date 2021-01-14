@@ -1,9 +1,11 @@
 # sweden_crs_transformations_4dart
 'sweden_crs_transformations_4dart' is a Dart library ported from the 
-[C#.NET library 'sweden_crs_transformations_4net'](https://github.com/TomasJohansson/sweden_crs_transformations_4net/) for transforming geographic coordinates between the following three kind of CRS (Coordinate Reference Systems): WGS84, SWEREF99 and RT90.
+[C#.NET library 'sweden_crs_transformations_4net'](https://github.com/TomasJohansson/sweden_crs_transformations_4net/) 
+for transforming geographic coordinates between the following three kind of CRS (Coordinate Reference Systems): WGS84, SWEREF99 and RT90.
 (13 versions of SWEREF99, and 6 versions of RT90)
 
-That C#.NET library ('sweden_crs_transformations_4net') is based on [C# library MightyLittleGeodesy](https://github.com/bjornsallarp/MightyLittleGeodesy/) which in turn is based on a [javascript library by Arnold Andreasson](http://latlong.mellifica.se/).
+That C#.NET library ('sweden_crs_transformations_4net') is 
+based on [C# library MightyLittleGeodesy](https://github.com/bjornsallarp/MightyLittleGeodesy/) which in turn is based on a [javascript library by Arnold Andreasson](http://latlong.mellifica.se/).
 
 The main part of 'MightyLittleGeodesy' which has been kept (to the C# library 'sweden_crs_transformations_4net') is the mathematical calculations in the class 'GaussKreuger.cs'.  
 Regarding the port to this 'sweden_crs_transformations_4dart' then of course there had to be more modifications since Dart has differences in syntax compared with C#, although 
@@ -68,11 +70,19 @@ void main() {
 }
 ```
 
+# Accuracy of the transformations
+
+This Dart library is a port of the [C#.NET library 'sweden_crs_transformations_4net'](https://github.com/TomasJohansson/sweden_crs_transformations_4net/) and therefore it is using the same file "swedish_crs_coordinates.csv" as the C# library, for the regression testing of the Dart implementation.  
+There are 18 rows with coordinates in that file, and it will lead to 108 transformations being done when executing all Dart tests, e.g. with the command 'pub run test'.  
+The coordinate values in the file have been created as median values from six different Java implementations of CRS transformations.  
+For more information about the origin of the data file being used, please see the webpage linked above for the C# library 'sweden_crs_transformations_4net'.
+
 # License
 
 MIT.  
 'sweden_crs_transformations_4dart' is ported from the C# library 'sweden_crs_transformations_4net'
-which is also licensed with MIT since it started as a fork of the C# library 'MightyLittleGeodesy' which is licensed with the MIT license.
+which is also licensed with MIT since it started as a fork of the C# library 'MightyLittleGeodesy' which is licensed with the MIT license. (see below).  
+[License text for 'sweden_crs_transformations_4dart'](https://github.com/TomasJohansson/sweden_crs_transformations_4dart/blob/dart_SwedenCrsTransformations/LICENSE)
 
 # License for the original C# repository [MightyLittleGeodesy](https://github.com/bjornsallarp/MightyLittleGeodesy/)
 
@@ -106,3 +116,16 @@ The text below has been copied from [one of the source files for MightyLittleGeo
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
  ```
+# Swedish coordinate reference systems
+There are two kind of national CRS being used in Sweden:   
+The old [RT90](https://www.lantmateriet.se/sv/Kartor-och-geografisk-information/gps-geodesi-och-swepos/Referenssystem/Tvadimensionella-system/RT-90/) (six versions for different local regions)    
+The new [SWEREF99](https://www.lantmateriet.se/sv/Kartor-och-geografisk-information/gps-geodesi-och-swepos/referenssystem/tvadimensionella-system/sweref-99-projektioner/) (thirteen versions, one for the national "TM" and twelve local regions)    
+
+The above links are for pages in Swedish at the website for [Lantmäteriet](https://en.wikipedia.org/wiki/Lantm%C3%A4teriet) which is a swedish authority for mapping.
+
+[https://www.lantmateriet.se/en/about-lantmateriet/about-lantmateriet/](https://www.lantmateriet.se/en/about-lantmateriet/about-lantmateriet/)   
+Quote from the above URL:
+```Text
+We map the country, demarcate boundaries and help guarantee secure ownership of Sweden’s real property.   
+You can get more information and documentation on Sweden’s geography and real properties from us.
+```
