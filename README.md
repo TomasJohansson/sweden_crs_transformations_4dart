@@ -11,9 +11,6 @@ The main part of 'MightyLittleGeodesy' which has been kept (to the C# library 's
 Regarding the port to this 'sweden_crs_transformations_4dart' then of course there had to be more modifications since Dart has differences in syntax compared with C#, although 
 the mathematical logic has still been kept from the original 'MightyLittleGeodesy' class 'GaussKreuger.cs'.
 
-# Pub.dev release
-No, not yet, but maybe soon.
-
 # Code example
 ```dart
 import 'package:sweden_crs_transformations_4dart/sweden_crs_transformations_4dart.dart';

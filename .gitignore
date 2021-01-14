@@ -11,3 +11,9 @@ build/
 
 # Directory created by dartdoc
 doc/api/
+
+
+# the "test" directory can temporary be renamed to "test_temp" to avoid publishing the tests when running 'dart pub publish'
+test_temp/
+# https://dart.dev/tools/pub/publishing#what-files-are-published
+#   If you’re using Git, any files ignored by your .gitignore file.

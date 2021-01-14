@@ -1,7 +1,8 @@
 name: sweden_crs_transformations_4dart
-description: A starting point for Dart libraries or applications.
-# version: 1.0.0
-# homepage: https://www.example.com
+description: Dart library for transformation of geographic coordinates between WGS84 and the Swedish coordinate reference systems SWEREF99 and RT90.
+version: 1.0.0
+homepage: https://github.com/TomasJohansson/sweden_crs_transformations_4dart
+repository: https://github.com/TomasJohansson/sweden_crs_transformations_4dart
 
 environment:
   sdk: '>=2.8.1 <3.0.0'

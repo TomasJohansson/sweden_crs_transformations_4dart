@@ -1,3 +1,4 @@
-## 1.0.0
+# Changelog
 
-- Initial version, created by Stagehand
+## 1.0.0 -  - 2021-01-14
+- Initial version
