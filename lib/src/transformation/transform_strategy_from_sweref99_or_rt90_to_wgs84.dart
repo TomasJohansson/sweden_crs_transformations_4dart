@@ -29,6 +29,6 @@ class TransformStrategy_from_SWEREF99_or_RT90_to_WGS84 extends TransformStrategy
     var gkProjection = GaussKreuger();
     gkProjection.swedish_params(sourceCoordinate.crsProjection);
     LatLon latLon = gkProjection.grid_to_geodetic(sourceCoordinate.yLatitude, sourceCoordinate.xLongitude);
-    return CrsCoordinate.CreateCoordinate(targetCrsProjection, latLon.yLatitude, latLon.xLongitude);
+    return CrsCoordinate.createCoordinate(targetCrsProjection, latLon.yLatitude, latLon.xLongitude);
   }
 }

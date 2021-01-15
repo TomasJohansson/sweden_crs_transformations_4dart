@@ -55,26 +55,46 @@ class CrsCoordinate {
   /// [epsgNumber] represents the coordinate reference system that defines the location together with the other two parameters.
   /// [xLongitude] is the coordinate position value representing the longitude or X or Easting
   /// [yLatitude] is the coordinate position value representing the latitude or Y or Northing
-  static CrsCoordinate CreateCoordinateByEpsgNumber(
+  static CrsCoordinate createCoordinateByEpsgNumber(
     int epsgNumber,
     double yLatitude,    
     double xLongitude
   ) {
     CrsProjection crsProjection = CrsProjectionFactory.getCrsProjectionByEpsgNumber(epsgNumber);
-    return CreateCoordinate(crsProjection, yLatitude, xLongitude);
+    return createCoordinate(crsProjection, yLatitude, xLongitude);
   }
+
+  /// Deprecated: Use [createCoordinateByEpsgNumber] instead i.e. the same name but lowercased first letter
+  @deprecated
+  static CrsCoordinate CreateCoordinateByEpsgNumber(
+    int epsgNumber,
+    double yLatitude,    
+    double xLongitude
+  ) {
+    return createCoordinateByEpsgNumber(epsgNumber, yLatitude, xLongitude);
+  }  
 
   /// Factory method for creating an instance.
   /// [crsProjection] represents the coordinate reference system that defines the location together with the other two parameters.
   /// [xLongitude] is the coordinate position value representing the longitude or X or Easting
   /// [yLatitude] is the coordinate position value representing the latitude or Y or Northing
   /// See also [CrsProjection]
-  static CrsCoordinate CreateCoordinate(
+  static CrsCoordinate createCoordinate(
     CrsProjection crsProjection,
     double yLatitude,    
     double xLongitude
   ) {
     return CrsCoordinate._privateConstructor(crsProjection, yLatitude, xLongitude);
+  }
+
+  /// Deprecated: Use [createCoordinate] instead i.e. the same name but lowercased first letter
+  @deprecated
+  static CrsCoordinate CreateCoordinate(
+    CrsProjection crsProjection,
+    double yLatitude,    
+    double xLongitude
+  ) {
+    return createCoordinate(crsProjection, yLatitude, xLongitude);
   }
 
   @override

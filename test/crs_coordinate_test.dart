@@ -19,17 +19,17 @@ void main() {
   const double stockholmCentralStation_SWEREF99TM_easting = 674032;
 
   test('transform', () {
-    CrsCoordinate stockholmWGS84 = CrsCoordinate.CreateCoordinate(
+    CrsCoordinate stockholmWGS84 = CrsCoordinate.createCoordinate(
       CrsProjection.wgs84,
       stockholmCentralStation_WGS84_latitude,      
       stockholmCentralStation_WGS84_longitude
     );
-    CrsCoordinate stockholmSWEREF99TM = CrsCoordinate.CreateCoordinate(
+    CrsCoordinate stockholmSWEREF99TM = CrsCoordinate.createCoordinate(
       CrsProjection.sweref_99_tm,
       stockholmCentralStation_SWEREF99TM_northing,      
       stockholmCentralStation_SWEREF99TM_easting
     );
-    CrsCoordinate stockholmRT90 = CrsCoordinate.CreateCoordinate(
+    CrsCoordinate stockholmRT90 = CrsCoordinate.createCoordinate(
       CrsProjection.rt90_2_5_gon_v,
       stockholmCentralStation_RT90_northing,      
       stockholmCentralStation_RT90_easting
@@ -79,7 +79,7 @@ void main() {
   test('createCoordinateByEpsgNumber', () {
     const double x = 20.0;
     const double y = 60.0;
-    CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinateByEpsgNumber(epsgNumberForSweref99tm, y, x);
+    CrsCoordinate crsCoordinate = CrsCoordinate.createCoordinateByEpsgNumber(epsgNumberForSweref99tm, y, x);
     Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.crsProjection.getEpsgNumber());
     Assert.AreEqual(x, crsCoordinate.xLongitude);
     Assert.AreEqual(y, crsCoordinate.yLatitude);
@@ -88,16 +88,36 @@ void main() {
   test('createCoordinate', () {
     const double x = 22.5;
     const double y = 62.5;
-    CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinate(CrsProjection.sweref_99_tm, y, x);
+    CrsCoordinate crsCoordinate = CrsCoordinate.createCoordinate(CrsProjection.sweref_99_tm, y, x);
     Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.crsProjection.getEpsgNumber());
     Assert.AreEqual(CrsProjection.sweref_99_tm, crsCoordinate.crsProjection);
     Assert.AreEqual(x, crsCoordinate.xLongitude);
     Assert.AreEqual(y, crsCoordinate.yLatitude);
   });
 
+  // remove this method later when the now deprecated method 'CreateCoordinateByEpsgNumber' has been removed
+  test('testing the deprecated CreateCoordinateByEpsgNumber with an uppercased first C', () {
+    const double x = 21.0;
+    const double y = 61.0;
+    CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinateByEpsgNumber(epsgNumberForSweref99tm, y, x);
+    Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.crsProjection.getEpsgNumber());
+    Assert.AreEqual(x, crsCoordinate.xLongitude);
+    Assert.AreEqual(y, crsCoordinate.yLatitude);
+  });
+  // remove this method later when the now deprecated method 'CreateCoordinate' has been removed
+  test('testing the deprecated CreateCoordinate with an uppercased first C', () {
+    const double x = 23.5;
+    const double y = 63.5;
+    CrsCoordinate crsCoordinate = CrsCoordinate.CreateCoordinate(CrsProjection.sweref_99_tm, y, x);
+    Assert.AreEqual(epsgNumberForSweref99tm, crsCoordinate.crsProjection.getEpsgNumber());
+    Assert.AreEqual(CrsProjection.sweref_99_tm, crsCoordinate.crsProjection);
+    Assert.AreEqual(x, crsCoordinate.xLongitude);
+    Assert.AreEqual(y, crsCoordinate.yLatitude);
+  });  
+
   test('equalityTest', () {
-    CrsCoordinate coordinateInstance_1 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, stockholmCentralStation_WGS84_latitude, stockholmCentralStation_WGS84_longitude);
-    CrsCoordinate coordinateInstance_2 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, stockholmCentralStation_WGS84_latitude, stockholmCentralStation_WGS84_longitude);
+    CrsCoordinate coordinateInstance_1 = CrsCoordinate.createCoordinate(CrsProjection.wgs84, stockholmCentralStation_WGS84_latitude, stockholmCentralStation_WGS84_longitude);
+    CrsCoordinate coordinateInstance_2 = CrsCoordinate.createCoordinate(CrsProjection.wgs84, stockholmCentralStation_WGS84_latitude, stockholmCentralStation_WGS84_longitude);
     Assert.AreEqual(coordinateInstance_1.hashCode, coordinateInstance_2.hashCode);
     Assert.AreEqual(coordinateInstance_1, coordinateInstance_2);
     Assert.IsTrue(coordinateInstance_1 == coordinateInstance_2);
@@ -106,7 +126,7 @@ void main() {
     Assert.IsFalse(coordinateInstance_2 != coordinateInstance_1);
 
     double delta = 0.000000000000001; // see comments further below regarding the value of "delta"
-    CrsCoordinate coordinateInstance_3 = CrsCoordinate.CreateCoordinate(
+    CrsCoordinate coordinateInstance_3 = CrsCoordinate.createCoordinate(
       CrsProjection.wgs84,
       stockholmCentralStation_WGS84_latitude + delta,      
       stockholmCentralStation_WGS84_longitude + delta
@@ -127,7 +147,7 @@ void main() {
     // the difference is as 'big' as in the "delta" value above.
 
     delta = delta * 10; // moving the decimal one bit to get a somewhat larger values, and then the instances are not considered equal, as you can see in the tests below.
-    CrsCoordinate coordinateInstance_4 = CrsCoordinate.CreateCoordinate(
+    CrsCoordinate coordinateInstance_4 = CrsCoordinate.createCoordinate(
       CrsProjection.wgs84,
       stockholmCentralStation_WGS84_latitude + delta,      
       stockholmCentralStation_WGS84_longitude + delta
@@ -141,7 +161,7 @@ void main() {
 
 
   test('toStringTest', () {
-    CrsCoordinate coordinate = CrsCoordinate.CreateCoordinate(CrsProjection.sweref_99_18_00, 6579457.649, 153369.673);
+    CrsCoordinate coordinate = CrsCoordinate.createCoordinate(CrsProjection.sweref_99_18_00, 6579457.649, 153369.673);
     Assert.AreEqual(
       "CrsCoordinate [ Y: 6579457.649 , X: 153369.673 , CRS: SWEREF_99_18_00 ]",
       coordinate.toString()
@@ -149,7 +169,7 @@ void main() {
 
     
 
-    CrsCoordinate coordinate2 = CrsCoordinate.CreateCoordinate(CrsProjection.wgs84, 59.330231, 18.059196);
+    CrsCoordinate coordinate2 = CrsCoordinate.createCoordinate(CrsProjection.wgs84, 59.330231, 18.059196);
     const expectedDefaultToStringResultForCoordinate2 = "CrsCoordinate [ Latitude: 59.330231 , Longitude: 18.059196 , CRS: WGS84 ]";
     Assert.AreEqual(
        expectedDefaultToStringResultForCoordinate2,

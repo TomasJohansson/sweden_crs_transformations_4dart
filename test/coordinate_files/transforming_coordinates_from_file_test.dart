@@ -111,9 +111,9 @@ class _Coordinates {
       // Note that the order of the parameters in the input file (with its lines being used here)
       // are in the order x/Longitude first, but the create method below takes the y/Latitude first
       // (and therefore the parameters are not in the sequential order regarding the array indexes)      
-      CrsCoordinate.CreateCoordinateByEpsgNumber(int.parse(columns[0]), double.parse(columns[2]), double.parse(columns[1])),
-      CrsCoordinate.CreateCoordinateByEpsgNumber(int.parse(columns[3]), double.parse(columns[5]), double.parse(columns[4])),
-      CrsCoordinate.CreateCoordinateByEpsgNumber(int.parse(columns[6]), double.parse(columns[8]), double.parse(columns[7]))
+      CrsCoordinate.createCoordinateByEpsgNumber(int.parse(columns[0]), double.parse(columns[2]), double.parse(columns[1])),
+      CrsCoordinate.createCoordinateByEpsgNumber(int.parse(columns[3]), double.parse(columns[5]), double.parse(columns[4])),
+      CrsCoordinate.createCoordinateByEpsgNumber(int.parse(columns[6]), double.parse(columns[8]), double.parse(columns[7]))
     ]);
   }
 }

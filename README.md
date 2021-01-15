@@ -28,7 +28,7 @@ void main() {
   const stockholmCentralStation_WGS84_latitude = 59.330231;
   const stockholmCentralStation_WGS84_longitude = 18.059196;
 
-  final CrsCoordinate stockholmWGS84 = CrsCoordinate.CreateCoordinate(
+  final CrsCoordinate stockholmWGS84 = CrsCoordinate.createCoordinate(
     CrsProjection.wgs84,
     stockholmCentralStation_WGS84_latitude,      
     stockholmCentralStation_WGS84_longitude
