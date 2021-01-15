@@ -31,25 +31,15 @@ class CrsCoordinate {
   /// The coordinate value representing the latitude or Y or Northing.
   final double yLatitude;
 
+  // -----------------------------------------------
+  // Three constructors (one private, and two public factory constructors):
+
   /// Private constructor. Client code must instead use the factory constructors.
   const CrsCoordinate._privateConstructor(
     this.crsProjection,
     this.yLatitude,    
     this.xLongitude
   );
-
-  /// Transforms the coordinate to another coordinate reference system.
-  /// [targetCrsProjection] represents the coordinate reference system that you want to transform to.
-  CrsCoordinate transform(CrsProjection targetCrsProjection) {
-    return Transformer.transform(this, targetCrsProjection);
-  }
-
-  /// Transforms the coordinate to another coordinate reference system.
-  /// [targetEpsgNumber] represents the coordinate reference system that you want to transform to.
-  CrsCoordinate transformByEpsgNumber(int targetEpsgNumber) {
-    CrsProjection targetCrsProjection = CrsProjectionFactory.getCrsProjectionByEpsgNumber(targetEpsgNumber);
-    return transform(targetCrsProjection);
-  }
 
   /// Factory constructor for creating an instance.
   /// [epsgNumber] represents the coordinate reference system that defines the location together with the other two parameters.
@@ -64,16 +54,6 @@ class CrsCoordinate {
     return CrsCoordinate.createCoordinate(crsProjection, yLatitude, xLongitude);
   }
 
-  /// Deprecated: Use [createCoordinateByEpsgNumber] instead i.e. the same name but lowercased first letter
-  @deprecated
-  static CrsCoordinate CreateCoordinateByEpsgNumber(
-    int epsgNumber,
-    double yLatitude,    
-    double xLongitude
-  ) {
-    return CrsCoordinate.createCoordinateByEpsgNumber(epsgNumber, yLatitude, xLongitude);
-  }  
-
   /// Factory constructor for creating an instance.
   /// [crsProjection] represents the coordinate reference system that defines the location together with the other two parameters.
   /// [xLongitude] is the coordinate position value representing the longitude or X or Easting
@@ -86,15 +66,20 @@ class CrsCoordinate {
   ) {
     return CrsCoordinate._privateConstructor(crsProjection, yLatitude, xLongitude);
   }
+  // -----------------------------------------------
 
-  /// Deprecated: Use [createCoordinate] instead i.e. the same name but lowercased first letter
-  @deprecated
-  static CrsCoordinate CreateCoordinate(
-    CrsProjection crsProjection,
-    double yLatitude,    
-    double xLongitude
-  ) {
-    return CrsCoordinate.createCoordinate(crsProjection, yLatitude, xLongitude);
+
+  /// Transforms the coordinate to another coordinate reference system.
+  /// [targetCrsProjection] represents the coordinate reference system that you want to transform to.
+  CrsCoordinate transform(CrsProjection targetCrsProjection) {
+    return Transformer.transform(this, targetCrsProjection);
+  }
+
+  /// Transforms the coordinate to another coordinate reference system.
+  /// [targetEpsgNumber] represents the coordinate reference system that you want to transform to.
+  CrsCoordinate transformByEpsgNumber(int targetEpsgNumber) {
+    CrsProjection targetCrsProjection = CrsProjectionFactory.getCrsProjectionByEpsgNumber(targetEpsgNumber);
+    return transform(targetCrsProjection);
   }
 
   @override
@@ -126,7 +111,6 @@ class CrsCoordinate {
     return _toStringImplementation(this);
   }
 
-
   /// See also [CrsCoordinateToString]
   static CrsCoordinateToString _toStringImplementation = defaultToStringImplementation;
 
@@ -150,4 +134,29 @@ class CrsCoordinate {
     _toStringImplementation = defaultToStringImplementation;
   }
 
+
+
+  // -----------------------------------------------
+  // Deprecated methods:
+
+  /// Deprecated: Use [createCoordinateByEpsgNumber] instead i.e. the same name but lowercased first letter
+  @deprecated
+  static CrsCoordinate CreateCoordinateByEpsgNumber(
+    int epsgNumber,
+    double yLatitude,    
+    double xLongitude
+  ) {
+    return CrsCoordinate.createCoordinateByEpsgNumber(epsgNumber, yLatitude, xLongitude);
+  }  
+
+  /// Deprecated: Use [createCoordinate] instead i.e. the same name but lowercased first letter
+  @deprecated
+  static CrsCoordinate CreateCoordinate(
+    CrsProjection crsProjection,
+    double yLatitude,    
+    double xLongitude
+  ) {
+    return CrsCoordinate.createCoordinate(crsProjection, yLatitude, xLongitude);
+  }
+  // -----------------------------------------------
 }
