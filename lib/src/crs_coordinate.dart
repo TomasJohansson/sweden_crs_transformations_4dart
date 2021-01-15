@@ -31,8 +31,8 @@ class CrsCoordinate {
   /// The coordinate value representing the latitude or Y or Northing.
   final double yLatitude;
 
-  /// Private constructor. Client code must instead use the public factory methods.
-  CrsCoordinate._privateConstructor(
+  /// Private constructor. Client code must instead use the factory constructors.
+  const CrsCoordinate._privateConstructor(
     this.crsProjection,
     this.yLatitude,    
     this.xLongitude
@@ -51,17 +51,17 @@ class CrsCoordinate {
     return transform(targetCrsProjection);
   }
 
-  /// Factory method for creating an instance.
+  /// Factory constructor for creating an instance.
   /// [epsgNumber] represents the coordinate reference system that defines the location together with the other two parameters.
   /// [xLongitude] is the coordinate position value representing the longitude or X or Easting
   /// [yLatitude] is the coordinate position value representing the latitude or Y or Northing
-  static CrsCoordinate createCoordinateByEpsgNumber(
+  factory CrsCoordinate.createCoordinateByEpsgNumber(
     int epsgNumber,
     double yLatitude,    
     double xLongitude
   ) {
     CrsProjection crsProjection = CrsProjectionFactory.getCrsProjectionByEpsgNumber(epsgNumber);
-    return createCoordinate(crsProjection, yLatitude, xLongitude);
+    return CrsCoordinate.createCoordinate(crsProjection, yLatitude, xLongitude);
   }
 
   /// Deprecated: Use [createCoordinateByEpsgNumber] instead i.e. the same name but lowercased first letter
@@ -71,15 +71,15 @@ class CrsCoordinate {
     double yLatitude,    
     double xLongitude
   ) {
-    return createCoordinateByEpsgNumber(epsgNumber, yLatitude, xLongitude);
+    return CrsCoordinate.createCoordinateByEpsgNumber(epsgNumber, yLatitude, xLongitude);
   }  
 
-  /// Factory method for creating an instance.
+  /// Factory constructor for creating an instance.
   /// [crsProjection] represents the coordinate reference system that defines the location together with the other two parameters.
   /// [xLongitude] is the coordinate position value representing the longitude or X or Easting
   /// [yLatitude] is the coordinate position value representing the latitude or Y or Northing
   /// See also [CrsProjection]
-  static CrsCoordinate createCoordinate(
+  factory CrsCoordinate.createCoordinate(
     CrsProjection crsProjection,
     double yLatitude,    
     double xLongitude
@@ -94,7 +94,7 @@ class CrsCoordinate {
     double yLatitude,    
     double xLongitude
   ) {
-    return createCoordinate(crsProjection, yLatitude, xLongitude);
+    return CrsCoordinate.createCoordinate(crsProjection, yLatitude, xLongitude);
   }
 
   @override
