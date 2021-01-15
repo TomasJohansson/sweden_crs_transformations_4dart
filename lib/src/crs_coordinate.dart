@@ -51,7 +51,7 @@ class CrsCoordinate {
     double xLongitude
   ) {
     CrsProjection crsProjection = CrsProjectionFactory.getCrsProjectionByEpsgNumber(epsgNumber);
-    return CrsCoordinate.createCoordinate(crsProjection, yLatitude, xLongitude);
+    return CrsCoordinate._privateConstructor(crsProjection, yLatitude, xLongitude);
   }
 
   /// Factory constructor for creating an instance.
