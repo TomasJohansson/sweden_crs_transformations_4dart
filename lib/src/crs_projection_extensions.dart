@@ -48,7 +48,7 @@ extension CrsProjectionExtensions on CrsProjection {
   /// A string representation of an enum instance.
   /// The string returned is the same as the name but uppercased, e.g. wgs84 ==> "WGS84"
   String getAsString() {
-    String enumTypenameAndInstanceNameSeparatedWithDot = this.toString(); // something like "CrsProjection.sweref_99_18_00"
+    String enumTypenameAndInstanceNameSeparatedWithDot = toString(); // something like "CrsProjection.sweref_99_18_00"
     int indexOfTheDot = enumTypenameAndInstanceNameSeparatedWithDot.indexOf('.');
     String instanceName = enumTypenameAndInstanceNameSeparatedWithDot.substring(indexOfTheDot + 1);
     // print("instanceName " + instanceName); // e.g. "sweref_99_18_00"

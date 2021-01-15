@@ -48,7 +48,7 @@ class CrsCoordinate {
   /// [targetEpsgNumber] represents the coordinate reference system that you want to transform to.
   CrsCoordinate transformByEpsgNumber(int targetEpsgNumber) {
     CrsProjection targetCrsProjection = CrsProjectionFactory.getCrsProjectionByEpsgNumber(targetEpsgNumber);
-    return this.transform(targetCrsProjection);
+    return transform(targetCrsProjection);
   }
 
   /// Factory method for creating an instance.
@@ -80,13 +80,10 @@ class CrsCoordinate {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true; // Checks whether two references are to the same object.
-    if(other is CrsCoordinate) {
-      return other != null &&
-        this.crsProjection == other.crsProjection &&
-        this.xLongitude == other.xLongitude &&
-        this.yLatitude == other.yLatitude;
-    }
-    return true;
+    return (other is CrsCoordinate) && 
+        crsProjection == other.crsProjection &&
+        xLongitude == other.xLongitude &&
+        yLatitude == other.yLatitude;
   }
   // Regarding the missing (i.e. not implemented or overridden here) method "!=" it is "just syntactic sugar.
   //  For example, the expression e1 != e2 is syntactic sugar for !(e1 == e2).""
@@ -118,9 +115,9 @@ class CrsCoordinate {
   /// "CrsCoordinate [ Latitude: 59.330231 , Longitude: 18.059196 , CRS: WGS84 ]"
   static String defaultToStringImplementation(CrsCoordinate coordinate) {
     bool isWgs84 =  coordinate.crsProjection.isWgs84();
-    String yOrLatitude = isWgs84 ? "Latitude" : "Y";        
-    String xOrLongitude = isWgs84 ? "Longitude" : "X";
-    return "CrsCoordinate [ ${yOrLatitude}: ${coordinate.yLatitude} , ${xOrLongitude}: ${coordinate.xLongitude} , CRS: ${coordinate.crsProjection.getAsString()} ]";
+    String yOrLatitude = isWgs84 ? 'Latitude' : 'Y';
+    String xOrLongitude = isWgs84 ? 'Longitude' : 'X';
+    return 'CrsCoordinate [ ${yOrLatitude}: ${coordinate.yLatitude} , ${xOrLongitude}: ${coordinate.xLongitude} , CRS: ${coordinate.crsProjection.getAsString()} ]';
   }
 
   /// Sets a custom method to be used for rendering an instance when the 'toString' method is used.

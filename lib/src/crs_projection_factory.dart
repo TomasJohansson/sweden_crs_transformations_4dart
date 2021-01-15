@@ -32,7 +32,7 @@ class CrsProjectionFactory {
         return crsProjection;
       }
     }
-    throw ArgumentError("Could not find CrsProjection for EPSG " + epsg.toString()); // https://api.dart.dev/stable/2.10.4/dart-core/ArgumentError-class.html
+    throw ArgumentError('Could not find CrsProjection for EPSG ${epsg.toString()}'); // https://api.dart.dev/stable/2.10.4/dart-core/ArgumentError-class.html
   }
 
   /// Convenience method for retrieving all the projections in a List.

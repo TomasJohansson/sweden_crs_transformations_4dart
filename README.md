@@ -5,7 +5,7 @@ for transforming geographic coordinates between the following three kind of CRS 
 (13 versions of SWEREF99, and 6 versions of RT90)
 
 That C#.NET library ('sweden_crs_transformations_4net') is 
-based on [C# library MightyLittleGeodesy](https://github.com/bjornsallarp/MightyLittleGeodesy/) which in turn is based on a [javascript library by Arnold Andreasson](http://latlong.mellifica.se/).
+based on [C# library MightyLittleGeodesy](https://github.com/bjornsallarp/MightyLittleGeodesy/) which in turn is based on a [javascript library by Arnold Andreasson](https://latlong.mellifica.se/).
 
 The main part of 'MightyLittleGeodesy' which has been kept (to the C# library 'sweden_crs_transformations_4net') is the mathematical calculations in the class 'GaussKreuger.cs'.  
 Regarding the port to this 'sweden_crs_transformations_4dart' then of course there had to be more modifications since Dart has differences in syntax compared with C#, although 

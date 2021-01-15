@@ -29,10 +29,11 @@
 //              "public void swedish_params(string projection)" ==> "public void swedish_params(CrsProjection projection)"
 //      - now the if/else statements in the implementation of the above method "swedish_params" compares with the enum values for CrsProjection instead of comparing with string literals
 //      - removed the if/else statements in the above method "swedish_params" which used the projection strings beginning with "bessel_rt90"
+//      - removed the now unused method 'bessel_params()'
 // 
 // For more details about exactly what has changed in this GaussKreuger class, you can also use a git client with "compare" or "blame" features to see the changes)
 
-// Note that most of the above changes were copied from the C# project which modified the GaussKreuger class.
+// Note that *most of* the above changes were copied from the C# project which modified the GaussKreuger class.
 // But later this file has been ported to the programming language Dart, and thus some more modifications,
 // but for those details about what has changed when porting from C# to Dart, please see the git repository with the source code.
 // (also be aware that some further updates may have been made in the Dart project without being mentioned above in the above comments that mostly was copied from the C# library)
@@ -81,7 +82,7 @@
   * But later more changes of course when it was ported to the programming language Dart in this source file.
   * For details about changes, you should be able to use the github repository to see the git history where you found this source code file.
   */
-import 'dart:math' as Math; // uppercased alias to make it more look like the original C# file e.g. when comparing with WinMerge or similar diff utility
+import 'dart:math' as math;
 import '../crs_projection.dart';
 import 'lat_lon.dart';
 
@@ -234,15 +235,6 @@ class GaussKreuger
     _flattening = 1.0 / 298.257222101; // GRS 80.
     _central_meridian = double.minPositive;
   }
-  void _bessel_params()
-  {
-    _axis = 6377397.155; // Bessel 1841.
-    _flattening = 1.0 / 299.1528128; // Bessel 1841.
-    _central_meridian = double.minPositive;
-    _scale = 1.0;
-    _false_northing = 0.0;
-    _false_easting = 1500000.0;
-  }
 
   /// Sets default parameters for sweref99.
   void _sweref99_params()
@@ -274,29 +266,29 @@ class GaussKreuger
     double beta4 = 49561.0 * n * n * n * n / 161280.0;
 
     // Convert.
-    double deg_to_rad = Math.pi / 180.0;
+    double deg_to_rad = math.pi / 180.0;
     double phi = latitude * deg_to_rad;
     double lambda = longitude * deg_to_rad;
     double lambda_zero = _central_meridian * deg_to_rad;
 
-    double phi_star = phi - Math.sin(phi) * Math.cos(phi) * (A +
-                B * Math.pow(Math.sin(phi), 2) +
-                C * Math.pow(Math.sin(phi), 4) +
-                D * Math.pow(Math.sin(phi), 6));
+    double phi_star = phi - math.sin(phi) * math.cos(phi) * (A +
+                B * math.pow(math.sin(phi), 2) +
+                C * math.pow(math.sin(phi), 4) +
+                D * math.pow(math.sin(phi), 6));
     double delta_lambda = lambda - lambda_zero;
-    double xi_prim = Math.atan(Math.tan(phi_star) / Math.cos(delta_lambda));
-    double eta_prim = _math_atanh(Math.cos(phi_star) * Math.sin(delta_lambda));
+    double xi_prim = math.atan(math.tan(phi_star) / math.cos(delta_lambda));
+    double eta_prim = _math_atanh(math.cos(phi_star) * math.sin(delta_lambda));
     double x = _scale * a_roof * (xi_prim +
-                beta1 * Math.sin(2.0 * xi_prim) * _math_cosh(2.0 * eta_prim) +
-                beta2 * Math.sin(4.0 * xi_prim) * _math_cosh(4.0 * eta_prim) +
-                beta3 * Math.sin(6.0 * xi_prim) * _math_cosh(6.0 * eta_prim) +
-                beta4 * Math.sin(8.0 * xi_prim) * _math_cosh(8.0 * eta_prim)) +
+                beta1 * math.sin(2.0 * xi_prim) * _math_cosh(2.0 * eta_prim) +
+                beta2 * math.sin(4.0 * xi_prim) * _math_cosh(4.0 * eta_prim) +
+                beta3 * math.sin(6.0 * xi_prim) * _math_cosh(6.0 * eta_prim) +
+                beta4 * math.sin(8.0 * xi_prim) * _math_cosh(8.0 * eta_prim)) +
                 _false_northing;
     double y = _scale * a_roof * (eta_prim +
-                beta1 * Math.cos(2.0 * xi_prim) * _math_sinh(2.0 * eta_prim) +
-                beta2 * Math.cos(4.0 * xi_prim) * _math_sinh(4.0 * eta_prim) +
-                beta3 * Math.cos(6.0 * xi_prim) * _math_sinh(6.0 * eta_prim) +
-                beta4 * Math.cos(8.0 * xi_prim) * _math_sinh(8.0 * eta_prim)) +
+                beta1 * math.cos(2.0 * xi_prim) * _math_sinh(2.0 * eta_prim) +
+                beta2 * math.cos(4.0 * xi_prim) * _math_sinh(4.0 * eta_prim) +
+                beta3 * math.cos(6.0 * xi_prim) * _math_sinh(6.0 * eta_prim) +
+                beta4 * math.cos(8.0 * xi_prim) * _math_sinh(8.0 * eta_prim)) +
                 _false_easting;
     x_y[0] = ((x * 1000.0)).roundToDouble() / 1000.0;
     x_y[1] = ((y * 1000.0)).roundToDouble() / 1000.0;
@@ -310,7 +302,7 @@ class GaussKreuger
     List<double> lat_lon = [0.0, 0.0];
     if (_central_meridian == double.minPositive)
     {
-      return new LatLon(lat_lon[1], lat_lon[0]);
+      return LatLon(lat_lon[1], lat_lon[0]);
     }
     // Prepare ellipsoid-based stuff.
     double e2 = _flattening * (2.0 - _flattening);
@@ -327,43 +319,43 @@ class GaussKreuger
     double Dstar = -(4279.0 * e2 * e2 * e2 * e2) / 1260.0;
 
     // Convert.
-    double deg_to_rad = Math.pi / 180;
+    double deg_to_rad = math.pi / 180;
     double lambda_zero = _central_meridian * deg_to_rad;
     double xi = (yLatitude - _false_northing) / (_scale * a_roof);
     double eta = (xLongitude - _false_easting) / (_scale * a_roof);
     double xi_prim = xi -
-                    delta1 * Math.sin(2.0 * xi) * _math_cosh(2.0 * eta) -
-                    delta2 * Math.sin(4.0 * xi) * _math_cosh(4.0 * eta) -
-                    delta3 * Math.sin(6.0 * xi) * _math_cosh(6.0 * eta) -
-                    delta4 * Math.sin(8.0 * xi) * _math_cosh(8.0 * eta);
+                    delta1 * math.sin(2.0 * xi) * _math_cosh(2.0 * eta) -
+                    delta2 * math.sin(4.0 * xi) * _math_cosh(4.0 * eta) -
+                    delta3 * math.sin(6.0 * xi) * _math_cosh(6.0 * eta) -
+                    delta4 * math.sin(8.0 * xi) * _math_cosh(8.0 * eta);
     double eta_prim = eta -
-                    delta1 * Math.cos(2.0 * xi) * _math_sinh(2.0 * eta) -
-                    delta2 * Math.cos(4.0 * xi) * _math_sinh(4.0 * eta) -
-                    delta3 * Math.cos(6.0 * xi) * _math_sinh(6.0 * eta) -
-                    delta4 * Math.cos(8.0 * xi) * _math_sinh(8.0 * eta);
-    double phi_star = Math.asin(Math.sin(xi_prim) / _math_cosh(eta_prim));
-    double delta_lambda = Math.atan(_math_sinh(eta_prim) / Math.cos(xi_prim));
+                    delta1 * math.cos(2.0 * xi) * _math_sinh(2.0 * eta) -
+                    delta2 * math.cos(4.0 * xi) * _math_sinh(4.0 * eta) -
+                    delta3 * math.cos(6.0 * xi) * _math_sinh(6.0 * eta) -
+                    delta4 * math.cos(8.0 * xi) * _math_sinh(8.0 * eta);
+    double phi_star = math.asin(math.sin(xi_prim) / _math_cosh(eta_prim));
+    double delta_lambda = math.atan(_math_sinh(eta_prim) / math.cos(xi_prim));
     double lon_radian = lambda_zero + delta_lambda;
-    double lat_radian = phi_star + Math.sin(phi_star) * Math.cos(phi_star) *
+    double lat_radian = phi_star + math.sin(phi_star) * math.cos(phi_star) *
                     (Astar +
-                      Bstar * Math.pow(Math.sin(phi_star), 2) +
-                      Cstar * Math.pow(Math.sin(phi_star), 4) +
-                      Dstar * Math.pow(Math.sin(phi_star), 6));
-    lat_lon[0] = lat_radian * 180.0 / Math.pi;
-    lat_lon[1] = lon_radian * 180.0 / Math.pi;
+                      Bstar * math.pow(math.sin(phi_star), 2) +
+                      Cstar * math.pow(math.sin(phi_star), 4) +
+                      Dstar * math.pow(math.sin(phi_star), 6));
+    lat_lon[0] = lat_radian * 180.0 / math.pi;
+    lat_lon[1] = lon_radian * 180.0 / math.pi;
     var latLon = LatLon(lat_lon[0], lat_lon[1]);
     return latLon; // return lat_lon;
   }
 
 
   double _math_sinh(double value) {
-    return 0.5 * (Math.exp(value) - Math.exp(-value));
+    return 0.5 * (math.exp(value) - math.exp(-value));
   }
   double _math_cosh(double value) {
-    return 0.5 * (Math.exp(value) + Math.exp(-value));
+    return 0.5 * (math.exp(value) + math.exp(-value));
   }
   double _math_atanh(double value) {
-    return 0.5 * Math.log((1.0 + value) / (1.0 - value));
+    return 0.5 * math.log((1.0 + value) / (1.0 - value));
   }
 
 }

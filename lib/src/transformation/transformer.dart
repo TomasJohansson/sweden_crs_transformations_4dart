@@ -35,7 +35,7 @@ class Transformer {
   static CrsCoordinate transform(CrsCoordinate sourceCoordinate, CrsProjection targetCrsProjection) {
     if(sourceCoordinate.crsProjection == targetCrsProjection) return sourceCoordinate;
 
-    TransformStrategy _transFormStrategy = null;
+    TransformStrategy _transFormStrategy;
 
     // Transform FROM wgs84:
     if(
@@ -69,7 +69,7 @@ class Transformer {
       return _transFormStrategy.transform(sourceCoordinate, targetCrsProjection);
     }
 
-    throw new ArgumentError("Unhandled source/target projection transformation: ${sourceCoordinate.crsProjection} ==> ${targetCrsProjection}");
+    throw ArgumentError('Unhandled source/target projection transformation: ${sourceCoordinate.crsProjection} ==> ${targetCrsProjection}');
   }
 
 }
