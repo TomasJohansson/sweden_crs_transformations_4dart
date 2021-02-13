@@ -15,6 +15,11 @@ the mathematical logic has still been kept from the original 'MightyLittleGeodes
 
 [https://pub.dev/packages/sweden_crs_transformations_4dart/install](https://pub.dev/packages/sweden_crs_transformations_4dart/install)
 
+# Implementations in other programming languages
+Currently I have implemented this Dart library also with the following programming languages and github repositories:   
+C#.NET: [sweden_crs_transformations_4net](https://github.com/TomasJohansson/sweden_crs_transformations_4net)   
+TypeScript: [sweden_crs_transformations_4typescript](https://github.com/TomasJohansson/sweden_crs_transformations_4typescript)   
+
 # Code example
 ```dart
 import 'package:sweden_crs_transformations_4dart/sweden_crs_transformations_4dart.dart';
